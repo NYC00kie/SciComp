@@ -12,9 +12,9 @@ n = 1000
 
 beta = 0.01
 gamma = 0.01
-lam = 500000
+lam = 1e4
 
-dt = 1
+dt = 0.25
 t_max =100
 
 times = np.arange(0,t_max,dt)
