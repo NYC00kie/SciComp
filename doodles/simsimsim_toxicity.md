@@ -24,11 +24,11 @@ $\lambda$: resistance factor
 $$
 \begin{align}
   \tag{1}
-  \frac{d A}{d t} &= - (\beta \cdot A + \frac{C \cdot A}{\lambda} )\\
+  \frac{d A}{d t} &= - (\frac{\beta \cdot A}{n} + \frac{e^{\sqrt{C}} \cdot A}{\lambda} )\\
   \tag{2}
   \frac{d C}{d t} &= \gamma \cdot A \\
   \tag{3}
-  \frac{d D}{d t} &= \beta \cdot A + \frac{C \cdot A}{\lambda} 
+  \frac{d D}{d t} &= \frac{\beta \cdot A}{n} + \frac{e^{\sqrt{C}} \cdot A}{\lambda} )
 \end{align}
 $$
 
