@@ -22,11 +22,11 @@ $\lambda$: resistance factor
 $$
 \begin{align}
   \tag{1}
-  \dv{A}{t} &= - (\beta \cdot A + \frac{e^C \cdot A}{\lambda} )\\
+  \frac{\d A}{\d t} &= - (\beta \cdot A + \frac{e^C \cdot A}{\lambda} )\\
   \tag{2}
-  \dv{C}{t} &= \gamma \cdot A \\
+  \frac{\d C}{\d t} &= \gamma \cdot A \\
   \tag{3}
-  \dv{D}{t} &= \beta \cdot A + \frac{e^C \cdot A}{\lambda} 
+  \frac{\d D}{\d t} &= \beta \cdot A + \frac{e^C \cdot A}{\lambda} 
 \end{align}
 $$
 
