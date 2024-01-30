@@ -1,6 +1,6 @@
 # simsimsim_toxicity
 
-
+## No Research done - just an IDEA
 Lets create a modell that models the population of yeast in a Alcohol producing enviornment.
 The Yeast itself produces the alcohol and in turn after some point should kill itself.
 
