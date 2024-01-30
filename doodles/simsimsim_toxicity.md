@@ -7,7 +7,7 @@ The Yeast itself produces the alcohol and in turn after some point should kill i
 I am thinking about modeling this with a compartment model.
 The Compartments would be Alive(A), Dead(D) and Alcohol concentration(C).
 
-A would be initialised with a certain number.
+A would be initialised with the population number.
 
 D would be initialised with 0.
 
