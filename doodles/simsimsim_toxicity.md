@@ -8,8 +8,10 @@ I am thinking about modeling this with a compartment model.
 The Compartments would be Alive(A), Dead(D) and Alcohol concentration(C).
 
 A would be initialised with a certain number.
-D would be initialised with 0
-C would be initialised with 0
+
+D would be initialised with 0.
+
+C would be initialised with 0.
 
 an Equation could look like this:
 
@@ -22,11 +24,11 @@ $\lambda$: resistance factor
 $$
 \begin{align}
   \tag{1}
-  \frac{d A}{d t} &= - (\beta \cdot A + \frac{e^C \cdot A}{\lambda} )\\
+  \frac{d A}{d t} &= - (\beta \cdot A + \frac{C \cdot A}{\lambda} )\\
   \tag{2}
   \frac{d C}{d t} &= \gamma \cdot A \\
   \tag{3}
-  \frac{d D}{d t} &= \beta \cdot A + \frac{e^C \cdot A}{\lambda} 
+  \frac{d D}{d t} &= \beta \cdot A + \frac{C \cdot A}{\lambda} 
 \end{align}
 $$
 
