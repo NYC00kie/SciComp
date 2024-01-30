@@ -17,6 +17,7 @@ eggs/
 lib/
 include/
 bin/
+share/
 lib64/
 parts/
 sdist/
@@ -124,6 +125,7 @@ celerybeat.pid
 # Environments
 .env
 .venv
+pyvenv.cfg
 env/
 venv/
 ENV/
