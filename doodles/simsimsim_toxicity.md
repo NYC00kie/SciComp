@@ -28,7 +28,9 @@ $$
 \begin{align}
   \tag{1}
   \dv{A}{t} &= - (\beta \cdot A + \frac{e^C \cdot A}{\lambda} )\\
+  \tag{2}
   \dv{C}{t} &= \gamma \cdot A \\
+  \tag{3}
   \dv{D}{t} &= \beta \cdot A + \frac{e^C \cdot A}{\lambda} 
 \end{align}
 $$
