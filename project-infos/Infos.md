@@ -1,8 +1,24 @@
 # General
 In here General Research informations will be placed like links to papers or other important Information
 
+# Scientific Ideas
 
-# Ideas
+Herstellung von Ethanol durch die alkoholische Gärung
+
+Ethanol wird durch die alkoholische Gärung hergestellt. Bei der alkoholischen Gärung wandeln Hefepilze in sauerstoffarmer Umgebung Traubenzucker (Glucose) in Ethanol und Kohlenstoffdioxid Kohlenstoffdioxid
+Kohlenstoffdioxid ist bekannt als.
+
+und ein Bestandteil der Erdatmosphäre. Kohlenstoffdioxid entsteht bei der Verbrennung von kohlenstoffhaltigen Stoffen, also zum Beispiel wenn Holz verbrannt wird. um (Abb. 2).  
+
+Bei dieser Reaktion wird Energie frei, es handelt sich also um eine exotherme Reaktion. Die Energie wird in den Hefezellen in Form von ATP gespeichert. ATP ist eine energiereiche Verbindung, die immer dann zum Einsatz kommt, wenn die Zelle Energie benötigt. Die Hefezellen nutzen die Energie für ihre Stoffwechselprozesse.
+
+Damit die Hefezelle den Traubenzucker zu Alkohol und Wasser abbauen kann, benötigt die Hefezelle sogenannte Enzyme. Enzyme sind Eiweiße, die bestimmte Stoffwechselreaktionen ermöglichen. Die Enzyme wirken als Katalysatoren. Das bedeutet, dass die Enzyme die Aktivierungsenergie der Reaktion herabsetzen und dadurch die Reaktion beschleunigen.  
+
+Die alkoholische Gärung ist von der Temperatur abhängig. Je höher die Temperatur, desto schneller verläuft die Gärung. Die Temperaturabhängigkeit kannst du z. B. bei einem Hefeteig beobachten. Stellst du den Teig an einen warmen Platz, dann „geht“ der Teig schneller. Ab ca.
+
+werden jedoch die Enzyme in den Hefezellen zerstört (denaturiert) und der Gärprozess bricht ab.
+
+Ethanol kann von den Hefezellen nicht weiterverarbeitet werden und wird als Abfallprodukt ausgeschieden. Dabei können Hefezellen nur einen Alkoholgehalt von maximal 19% vertragen, da Alkohol auch für Hefezellen – wie für menschliche Zellen – giftig ist. Bei einem höheren Alkoholgehalt sterben die Hefezellen ab.
 
 # Ideas
 
