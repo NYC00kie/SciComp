@@ -35,10 +35,10 @@ def main():
 
     grid = np.random.randint(0,20,size=(width, height,3), dtype=np.uint16)
 
-	plt.imshow(grid)
-	plt.colorbar()
-	plt.savefig("grid_pre.jpg")
-	plt.clf()
+    plt.imshow(grid)
+    plt.colorbar()
+    plt.savefig("grid_pre.jpg")
+    plt.clf()
 
     d_grid = cuda.to_device(grid)
 
@@ -78,10 +78,10 @@ def main():
 
     print(len(result))
 
-	plt.imshow(result)
-	plt.colorbar()
-	plt.savefig("grid_post.jpg")
-	plt.clf()
+    plt.imshow(result)
+    plt.colorbar()
+    plt.savefig("grid_post.jpg")
+    plt.clf()
 
 
 
