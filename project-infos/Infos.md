@@ -7,11 +7,8 @@ In here General Research informations will be placed like links to papers or oth
 # Ideas
 
 Die Aktuelle Idee für den Code ist:
- | |
--------- | -------- | --------
-   |    | 
--------- | -------- | -------- 
-   |    |
+
+in einem Grid :
 
 - Hefe
 - Glucose
