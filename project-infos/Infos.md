@@ -1,6 +1,10 @@
 # General
 In here General Research informations will be placed like links to papers or other important Information
 
+<https://academic.oup.com/jimb/article/35/11/1359/5993274?login=true>
+
+<https://www.sciencedirect.com/science/article/pii/S0898122109005008>
+
 # Scientific Ideas
 
 Herstellung von Ethanol durch die alkoholische Gärung
