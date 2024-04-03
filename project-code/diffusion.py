@@ -27,9 +27,8 @@ def diffusion_kernel(rng_states, grid_in, grid_out, yeast_cells):
 
                     neighbour_index = int(math.floor(xoroshiro128p_uniform_float32(rng_states, (start_x * width + start_y * height))*8))
                     selected_neighbor = neighbor_indices[neighbour_index]
-                    grid_out[selected_neighbor[0], selected_neighbor[1], entri] += 1
+                    grid_out[selected_neighbor[1], selected_neighbor[0], entri] += 1
 
-                grid_in[x,y,entri] = 0
 
 
 
@@ -37,7 +36,7 @@ def main():
     width = 100
     height = 100
     cells_n = 10000
-    iterations = 5
+    iterations = 10
 
     entries = 1
     grid_in = np.random.randint(0, 800, size=(width, height, entries), dtype=np.uint16)
@@ -58,11 +57,13 @@ def main():
     blocks_per_grid = (blocks_per_grid_x, blocks_per_grid_y)
 
 
-    rng_states = create_xoroshiro128p_states(threads_per_block[0] * blocks_per_grid_x, seed=1)
 
     for i in range(iterations):
+
         d_grid_in = cuda.to_device(grid_in)
         d_grid_out = cuda.to_device(np.zeros((width, height, entries), dtype=np.uint16))
+
+        rng_states = create_xoroshiro128p_states(threads_per_block[0] * blocks_per_grid_x, seed=i+1)
 
 
         diffusion_kernel[blocks_per_grid, threads_per_block](rng_states, d_grid_in, d_grid_out, d_yeast_cells)
