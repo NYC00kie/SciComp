@@ -1,88 +1,90 @@
+from numba import cuda, vectorize, jit
+from numba.cuda.random import create_xoroshiro128p_states, xoroshiro128p_uniform_float32
 import numpy as np
-from numba import cuda, vectorize
-import time
-from PIL import Image
-from datetime import datetime
-import cv2
 import matplotlib.pyplot as plt
+import math
 
-
-
-
-# CUDA kernel to compute Mandelbrot set
 @cuda.jit
-def diffusion_kernal(real, imag, max_iter, output):
+def diffusion_kernel(rng_states, grid_in, grid_out, yeast_cells):
+    height, width, entries = grid_in.shape
     start_x, start_y = cuda.grid(2)
     stride_x, stride_y = cuda.gridsize(2)
-    height, width, depth = output.shape
 
-    for x in range(start_x, width, stride_x):
-        for y in range(start_y, height, stride_y):
-            pass
+    for entri in range(entries):
+        for x in range(start_x, width, stride_x):
+            for y in range(start_y, height, stride_y):
+                for item_num in range(grid_in[x,y, entri]):
+                    neighbor_indices = (
+                        ((x - 1) % width, (y - 1) % height),
+                        ((x - 1) % width, y),
+                        ((x - 1) % width, (y + 1) % height),
+                        (x, (y - 1) % height),
+                        (x, (y + 1) % height),
+                        ((x + 1) % width, (y - 1) % height),
+                        ((x + 1) % width, y),
+                        ((x + 1) % width, (y + 1) % height)
+                    )
+
+                    neighbour_index = int(math.floor(xoroshiro128p_uniform_float32(rng_states, (start_x * width + start_y * height))*8))
+                    selected_neighbor = neighbor_indices[neighbour_index]
+                    grid_out[selected_neighbor[0], selected_neighbor[1], entri] += 1
+
+                grid_in[x,y,entri] = 0
+
+
 
 def main():
-    # Define the size of the array (image)
     width = 100
     height = 100
-
     cells_n = 10000
+    iterations = 5
 
-    # Allocate memory for the output on the GPU
-    #
-    # width x height
-    # Ethanol, Sauerstoff, Zucker, Cell ID
-    #
+    entries = 1
+    grid_in = np.random.randint(0, 800, size=(width, height, entries), dtype=np.uint16)
+    grid_in[0, 0] = 10000
+    grid_out = np.zeros((width, height, entries), dtype=np.uint16)
+    yeast_cells = np.random.rand(cells_n, 15)
 
-    grid = np.random.randint(0,20,size=(width, height,3), dtype=np.uint16)
-
-    plt.imshow(grid)
+    plt.imshow(np.split(grid_in, entries, 2)[0])
     plt.colorbar()
     plt.savefig("grid_pre.jpg")
     plt.clf()
 
-    d_grid = cuda.to_device(grid)
-
-    #
-    # cells_n x 14 paramters
-    # 
-    #
-    #
-
-    yeast_cells = np.random.rand(cells_n, 15, dtype=np.float16)
-
-    print(yeast_cells)
-
     d_yeast_cells = cuda.to_device(yeast_cells)
 
-    # Time GPU computation
-    start_time = time.time()
-
-    # Configure kernel launch parameters
     threads_per_block = (16, 16)
     blocks_per_grid_x = (width + threads_per_block[0] - 1) // threads_per_block[0]
     blocks_per_grid_y = (height + threads_per_block[1] - 1) // threads_per_block[1]
     blocks_per_grid = (blocks_per_grid_x, blocks_per_grid_y)
 
-    # Launch kernel
-    diffusion_kernel[blocks_per_grid, threads_per_block](d_grid)
 
-    # Synchronize threads
-    cuda.synchronize()
+    rng_states = create_xoroshiro128p_states(threads_per_block[0] * blocks_per_grid_x, seed=1)
 
-    # Calculate elapsed time
-    elapsed_time = time.time() - start_time
-    print("Time taken for GPU computation: {:.6f} seconds".format(elapsed_time))
+    for i in range(iterations):
+        d_grid_in = cuda.to_device(grid_in)
+        d_grid_out = cuda.to_device(np.zeros((width, height, entries), dtype=np.uint16))
 
-    # Copy the result back to the CPU
-    result = d_grid.copy_to_host()
 
-    print(len(result))
+        diffusion_kernel[blocks_per_grid, threads_per_block](rng_states, d_grid_in, d_grid_out, d_yeast_cells)
 
-    plt.imshow(result)
-    plt.colorbar()
-    plt.savefig("grid_post.jpg")
-    plt.clf()
+        cuda.synchronize()
 
+        res_grid_in = d_grid_in.copy_to_host()
+        res_grid_out = d_grid_out.copy_to_host()
+
+        del d_grid_in
+        del d_grid_out
+
+        print(res_grid_in)
+        print(res_grid_out)
+
+        if i % 1 == 0:
+            plt.imshow(np.split(res_grid_out, entries, 2)[0])
+            plt.colorbar()
+            plt.savefig(f"grid_post_{i}.jpg")
+            plt.clf()
+
+        grid_in = res_grid_out
 
 
 if __name__ == "__main__":
