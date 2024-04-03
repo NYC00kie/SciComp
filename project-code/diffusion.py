@@ -25,10 +25,9 @@ def diffusion_kernel(rng_states, grid_in, grid_out, yeast_cells):
                         ((x + 1) % width, (y + 1) % height)
                     )
 
-                    neighbour_index = int(math.floor(xoroshiro128p_uniform_float32(rng_states, (start_x * width + start_y * height))*8))
+                    neighbour_index = int(math.floor(xoroshiro128p_uniform_float32(rng_states, (x * width + y * height + item_num)) * 8))
                     selected_neighbor = neighbor_indices[neighbour_index]
                     grid_out[selected_neighbor[1], selected_neighbor[0], entri] += 1
-
 
 
 
@@ -51,33 +50,27 @@ def main():
 
     d_yeast_cells = cuda.to_device(yeast_cells)
 
-    threads_per_block = (16, 16)
-    blocks_per_grid_x = (width + threads_per_block[0] - 1) // threads_per_block[0]
-    blocks_per_grid_y = (height + threads_per_block[1] - 1) // threads_per_block[1]
+    threads_per_block = (1,1)
+    blocks_per_grid_x = width
+    blocks_per_grid_y = height
     blocks_per_grid = (blocks_per_grid_x, blocks_per_grid_y)
 
-
+    rng_states = create_xoroshiro128p_states(width * height * 10000, seed=1)
 
     for i in range(iterations):
 
         d_grid_in = cuda.to_device(grid_in)
         d_grid_out = cuda.to_device(np.zeros((width, height, entries), dtype=np.uint16))
 
-        rng_states = create_xoroshiro128p_states(threads_per_block[0] * blocks_per_grid_x, seed=i+1)
-
+        #rng_states = create_xoroshiro128p_states(threads_per_block[0] * blocks_per_grid_x, seed=i+1)
 
         diffusion_kernel[blocks_per_grid, threads_per_block](rng_states, d_grid_in, d_grid_out, d_yeast_cells)
 
         cuda.synchronize()
 
-        res_grid_in = d_grid_in.copy_to_host()
         res_grid_out = d_grid_out.copy_to_host()
 
-        del d_grid_in
-        del d_grid_out
-
-        print(res_grid_in)
-        print(res_grid_out)
+        print(np.sum(res_grid_out))
 
         if i % 1 == 0:
             plt.imshow(np.split(res_grid_out, entries, 2)[0])
