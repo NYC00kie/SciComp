@@ -15,3 +15,8 @@ Für die Threads gäbe es eine Lösung, und zwar, dass man den vom Block zu bear
 
 ### Solution
 Das ist die Lösung, es wird in einem Block atomic added zum shared Memory, so können alle Blöcke ihren Bereich gleichzeitig berechnen und danach addiert der aller erste Thread ins grid_out
+
+
+# Ideen
+
+Implement the Diffusion for every Element (Glucose, Oxygen) for a seperate thread so that they can all run in parallel.
