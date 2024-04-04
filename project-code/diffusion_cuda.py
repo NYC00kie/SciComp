@@ -85,7 +85,7 @@ def main():
 
         print(np.sum(res_grid_out))
 
-        if i % 10 == 0:
+        if i % 1 == 0:
             plt.imshow(np.split(res_grid_out, entries, 2)[0])
             plt.colorbar()
             plt.savefig(f"grid_post_{i}.jpg")

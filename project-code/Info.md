@@ -2,6 +2,8 @@
 
 In diesem Ordner wird die Codebase des Projects sein.
 
+Dont use the Cuda, its ass and fucking slow, I dont know why.
+
 
 # Probleme
 
