@@ -11,4 +11,5 @@ Bei der Implementation des Diffusions Algorithmus in Cuda mithilfe von numba gib
 
 Für die Threads gäbe es eine Lösung, und zwar, dass man den vom Block zu bearbeitenden Daten Bereich in Shared Memory legt (nur für Threads, es gibt scheinbar kein Shared Memory zwischen Blöcken ) und in diesem Arbeitet, da dieser zwischen Threads geteilt wird.
 
+### Solution
 Das ist die Lösung, es wird in einem Block atomic added zum shared Memory, so können alle Blöcke ihren Bereich gleichzeitig berechnen und danach addiert der aller erste Thread ins grid_out
