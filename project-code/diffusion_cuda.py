@@ -10,7 +10,7 @@ def diffusion_kernel(rng_states, grid_in, grid_out, yeast_cells):
     start_x, start_y = cuda.grid(2)
     stride_x, stride_y = cuda.gridsize(2)
 
-    sharedMemT = cuda.shared.array((100*100), dtype=np.int32)
+    sharedMemT = cuda.shared.array((100,100,1), dtype=np.int32)
 
     for entri in range(entries):
         for x in range(start_x, width, stride_x):
@@ -31,15 +31,15 @@ def diffusion_kernel(rng_states, grid_in, grid_out, yeast_cells):
                     selected_neighbor = neighbor_indices[rng_states[x,y,entri, item_num]]
                     # grid_out[selected_neighbor[1], selected_neighbor[0], entri] += 1
                     cuda.syncthreads()
-                    cuda.atomic.add(sharedMemT, (selected_neighbor[1] * height + selected_neighbor[0] * width + entri), 1)
+                    cuda.atomic.add(sharedMemT, (selected_neighbor[1],selected_neighbor[0],entri), 1)
 
     cuda.syncthreads()
     if cuda.threadIdx.x == cuda.threadIdx.y and cuda.threadIdx.x == 0:
         for entri in range(entries):
             for x in range(width):
                 for y in range(height):
-                    cuda.atomic.add(grid_out, (y, x, entri), sharedMemT[y * height + x * width + entri])
-
+                    cuda.atomic.add(grid_out, (y, x, entri), sharedMemT[selected_neighbor[1],selected_neighbor[0],entri])
+    cuda.syncthreads()
 
 def main():
     width = 100
