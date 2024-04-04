@@ -32,10 +32,9 @@ def diffusion_normal(grid_in, grid_out, yeast_cells):
 
     return grid_in, grid_out
 
-
 def main_cpu():
-    width = 1000
-    height = 1000
+    width = 100
+    height = 100
     cells_n = 10000
     iterations = 101
 
