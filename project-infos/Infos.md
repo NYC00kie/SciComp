@@ -39,3 +39,6 @@ Werden zu
 - Hefe
 - Ethanol
 - CO_2
+
+
+Diffusion wird über faltung mit einem kernel gelöst
