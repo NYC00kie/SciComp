@@ -20,3 +20,7 @@ Das ist die Lösung, es wird in einem Block atomic added zum shared Memory, so k
 # Ideen
 
 Implement the Diffusion for every Element (Glucose, Oxygen) for a seperate thread so that they can all run in parallel.
+
+# Endlösung
+
+We from now on will use convolution to do the diffusion
