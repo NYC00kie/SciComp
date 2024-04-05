@@ -14,7 +14,7 @@ def main_cpu():
 
     cells_n = 10000
     iterations = 1001
-    entries = 1
+    entries = 4
 
     # creating diffusion kernel
     p = 0.125
@@ -40,12 +40,10 @@ def main_cpu():
 
             grid[entri] = convolve2d(grid[entri], kernel, mode="same", boundary="wrap")
 
-            
-
-            if i % 100 == 0:
+            if i % 10 == 0:
                     plt.imshow(grid[entri])
                     plt.colorbar()
-                    plt.savefig(f"grid_post_{entri}_{i//100}.jpg")
+                    plt.savefig(f"grid_post_{entri}_{i//10}.jpg")
                     plt.clf()
 
 
