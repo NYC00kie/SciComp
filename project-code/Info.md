@@ -23,4 +23,4 @@ Implement the Diffusion for every Element (Glucose, Oxygen) for a seperate threa
 
 # Endlösung
 
-We from now on will use convolution to do the diffusion
+We from now on will use convolution to do the diffusion. Multrithreading each Material is still an option.
