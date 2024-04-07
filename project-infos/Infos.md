@@ -67,4 +67,4 @@ Cell indices:
 13: Absorbtionskoeffizinet
 14: Überlebensrelevante Nahrungsmenge in Glucose pro Masseneinheit
 15: Metabolische Effizienz in Masse pro Glucose
-16
+16: times without satisfaction of metabolic requirements
