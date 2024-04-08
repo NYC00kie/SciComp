@@ -12,6 +12,7 @@ def metabolism(grid,cells,cellIdx):
 	# E: esidual constant that accounts for the amount of residual product (ethanol) per unit of metabolized glucose particle
 	#
 	#
+
 	U_max = cells[11][cellIdx]
 	I = cells[14][cellIdx]
 	Y = cells[15][cellIdx]
@@ -39,8 +40,8 @@ def metabolism(grid,cells,cellIdx):
 			# It now has died
 			for i in range(len(cells))
 				cells[i][cellIdx] = 0
-				
-			return;
+
+			return True;
 
 	else:
 		# The Cell has got enough food and can add to its mass
@@ -61,6 +62,12 @@ def metabolism(grid,cells,cellIdx):
 			# for every glucose, 2 Ethanol will come from it
 			grid[2][cells[0][cellIdx],cells[1][cellIdx]] = 2 * not_compensated
 
+	return False
+
+def reproduction(grid, cells, cellIdx):
+	
+	pass 
+
 
 def do_cell(grid_name, cells_name, cellIdx):
 
@@ -69,3 +76,6 @@ def do_cell(grid_name, cells_name, cellIdx):
     grid = np.ndarray((4,width,height), dtype=np.float32, buffer=existing_shm_grid.buf)
     existing_shm_cells = shared_memory.SharedMemory(name=cells_name)
     cells = np.ndarray((4,width,height), dtype=np.float32, buffer=existing_shm_cells.buf)
+
+    if metabolism(grid,cells,cellIdx):
+    	return
