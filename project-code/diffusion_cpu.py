@@ -1,3 +1,4 @@
+from KONSTANTS import *
 from numba import cuda, vectorize, jit
 from numba.cuda.random import create_xoroshiro128p_states, xoroshiro128p_uniform_float32
 import numpy as np
@@ -9,24 +10,19 @@ from multiprocessing import cpu_count, current_process
 from scipy.signal import convolve2d
 
 def main_cpu():
-    width = 100
-    height = 100
 
-    cells_n = 10000
-    iterations = 101
-    entries = 1
-
-    p = 0.1
+    # creating diffusion kernel
+    p = 0.125
     kernel = np.ones((3, 3)) * p
-    kernel[1, 1] = 1 - (8 * p)
+    kernel[1, 1] = 0
 
-    dim = (entries,width,height)
+    dim = (materials,width,height)
     
-    grid = np.random.randint(0, 800, size=dim, dtype=np.float16)
+    grid = np.random.uniform(0, 800, size=dim)
 
-    yeast_cells = np.random.rand(cells_n, 15)
+    yeast_cells = np.random.rand(cells_n, 16)
 
-    plt.imshow(grid_in[0])
+    plt.imshow(grid[0])
     plt.colorbar()
     plt.savefig("grid_pre.jpg")
     plt.clf()
@@ -50,18 +46,18 @@ def main_cpu():
    """
 
     for i in range(iterations):
+        if i % 100 == 0:
+            print(np.sum(grid))
+        
+        for entry in range(materials):
 
-        grid = convolve2d(grid_in, kernel, mode="same", boundary="wrap")
-
-        print(np.sum(grid))
-
-        for entri in range(entries):
+            grid[entry] = convolve2d(grid[entry], kernel, mode="same", boundary="wrap")
 
             if i % 10 == 0:
-                plt.imshow(grid_out[entri])
-                plt.colorbar()
-                plt.savefig(f"grid_post_{entri}_{i}.jpg")
-                plt.clf()
+                    plt.imshow(grid[entry])
+                    plt.colorbar()
+                    plt.savefig(f"grid_post_{entry}_{i//10}.jpg")
+                    plt.clf()
 
 
 
