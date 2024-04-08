@@ -31,6 +31,24 @@ def main_cpu():
     plt.savefig("grid_pre.jpg")
     plt.clf()
 
+   """ von hier an ist die Reihenfolge der Schritte aus dem 'Paper
+   INDISIM-YEAST: an individual-based simulator on a website for 
+   experimenting and investigating diverse dynamics of yeast 
+   populations in liquid media' zu beachten:
+   
+   -random motion
+   -uptake of nutrient particles
+   -enough nutrient particles for maintanance?
+   -Enough nutrient particles for new biomass?
+   -production and excretion of ethanole
+   -buding phase?
+   -cell division, new yeast cell (mutation!)
+   -unbudded phase
+   -requirments to be viable?
+   -update of new individual characteristics (wdym?)
+   -repeat
+   """
+
     for i in range(iterations):
 
         grid = convolve2d(grid_in, kernel, mode="same", boundary="wrap")
