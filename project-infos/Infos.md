@@ -69,3 +69,4 @@ Cell indices:
 15: Metabolische Effizienz in Masse pro Glucose
 16: times without satisfaction of metabolic requirements
 17: Glucoseinhibition
+18: time in budding phase
