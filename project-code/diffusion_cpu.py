@@ -18,7 +18,7 @@ def main_cpu():
 
     dim = (materials,width,height)
     
-    grid = numpy.zeros(dim, dtype=np.float32)
+    grid = numpy.zeros(dim, dtype=np.longdouble)
 
     yeast_cells = np.random.rand(cells_n, 16)
     

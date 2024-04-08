@@ -67,17 +67,46 @@ def metabolism(grid,cells,cellIdx):
 	return False
 
 def reproduction(grid, cells, cellIdx):
+	#
+	#
+	#
 	
-	pass 
+	if cells[5][cellIdx] == 1:
+		# Budding Phase 1
+
+		delta_m = cells[3][cellIdx] - cells[6][cellIdx]
+		if cells[7][cellIdx] <= delta_m:
+			# cell reached minimal budding mass for phase 2
+			cells[5][cellIdx] = 2
+
+	else:
+		# Budding Phase
+		delta_m = cells[3][cellIdx] - cells[6][cellIdx]
+		if 2 * cells[7][cellIdx] <= delta_m and cells[18][cellIdx] >= cells[8][cellIdx] :
+			# Cell division requirements are met.
+			babycell = [
+			cells[0][cellIdx],
+			cells[1][cellIdx],
+			cells[2][cellIdx],
+			2 * cells[7][cellIdx],
+			1,
+			
+			]
+			return
+
+		elif cells[18][cellIdx] <= cells[8][cellIdx]:
+			# Time isnt reached yet
+			cells[18][cellIdx] += 1
+			return
 
 
 def do_cell(grid_name, cells_name, cellIdx):
 
 	# load shared memory
 	existing_shm_grid = shared_memory.SharedMemory(name=grid_name)
-    grid = np.ndarray((4,width,height), dtype=np.float32, buffer=existing_shm_grid.buf)
+    grid = np.ndarray((4,width,height), dtype=np.longdouble, buffer=existing_shm_grid.buf)
     existing_shm_cells = shared_memory.SharedMemory(name=cells_name)
-    cells = np.ndarray((4,width,height), dtype=np.float32, buffer=existing_shm_cells.buf)
+    cells = np.ndarray((4,width,height), dtype=np.longdouble, buffer=existing_shm_cells.buf)
 
     if metabolism(grid,cells,cellIdx):
     	return
