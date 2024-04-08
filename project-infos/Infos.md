@@ -58,13 +58,14 @@ Cell indices:
 4: genealogical age
 5: reproduction phase
 6: start masse
-7: minimum growth of its biomass for the budding phase
+7: minimum growth of biomass for the initiation of the budding phase
 8: the minimum time required to complete the budding phase
 9: its survival time without satisfying its metabolic requirements.
 10: Mortalitätsindex
 11: Maximal mögliche Zahl an konsumierter Nahrung pro Zeit und Oberfläche
-12: Altersschwäche
-13: Absorbtionskoeffizinet
+12: Altersschwäche (Narbenbedingt)
+13: Ethanolinhibition
 14: Überlebensrelevante Nahrungsmenge in Glucose pro Masseneinheit
 15: Metabolische Effizienz in Masse pro Glucose
 16: times without satisfaction of metabolic requirements
+17: Glucoseinhibition

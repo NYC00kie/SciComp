@@ -21,6 +21,8 @@ def main_cpu():
     grid = np.random.uniform(0, 800, size=dim)
 
     yeast_cells = np.random.rand(cells_n, 16)
+    
+    #yeast_base = [0,0,0,1e-10,0,0,1e-11,12-11,2,2,0,0.00000000001,0.5]
 
     plt.imshow(grid[0])
     plt.colorbar()
