@@ -32,11 +32,11 @@ def main_cpu():
    experimenting and investigating diverse dynamics of yeast 
    populations in liquid media' zu beachten:
    
-   -random motion
-   -uptake of nutrient particles
-   -enough nutrient particles for maintanance?
-   -Enough nutrient particles for new biomass?
-   -production and excretion of ethanole
+   s-random motion
+   s-uptake of nutrient particles
+   s-enough nutrient particles for maintanance?
+   s-Enough nutrient particles for new biomass?
+   s-production and excretion of ethanole
    -buding phase?
    -cell division, new yeast cell (mutation!)
    -unbudded phase
