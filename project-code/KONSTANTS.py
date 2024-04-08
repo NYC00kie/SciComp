@@ -1,6 +1,6 @@
 # Simulation Setup Konstants
 
-cells_n = 10000
+cells_n = 1
 iterations = 1001
 materials = 4
 width = 1000
