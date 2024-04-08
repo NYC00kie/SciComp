@@ -18,7 +18,15 @@ def main_cpu():
 
     dim = (materials,width,height)
     
-    grid = np.random.uniform(0, 800, size=dim)
+    grid = numpy.zeros(dim, dtype=np.float32)
+
+    # Glucose
+    # Sauerstoff
+    # Ethanol
+    # CO_2
+
+    grid[0] = np.random.uniform(0, 800, size=(width,height))
+    grid[1] = np.random.uniform(200, 800, size=(width,height))
 
     yeast_cells = np.random.rand(cells_n, 16)
 
