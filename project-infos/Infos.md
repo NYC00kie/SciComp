@@ -65,8 +65,7 @@ Cell indices:
 11: Maximal mögliche Zahl an konsumierter Nahrung pro Zeit und Oberfläche
 12: Altersschwäche (Narbenbedingt)
 13: Ethanolinhibition
-14: Überlebensrelevante Nahrungsmenge in Glucose pro Masseneinheit
+14: Überlebensrelevante Nahrungsmenge in Glucose in mol pro Masseneinheit
 15: Metabolische Effizienz in Masse pro Glucose
-16: times without satisfaction of metabolic requirements
-17: Glucoseinhibition
-18: time in budding phase
+16: Glucoseinhibition
+17: time in budding phase
