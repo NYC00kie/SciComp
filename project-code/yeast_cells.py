@@ -32,7 +32,7 @@ def Metabolism(grid,cells,cellIdx):
 
 	ME = I * cells[cellIdx][3] + K_2 * grid[2][cells[cellIdx][0],cells[cellIdx][1]] * c * np.pow(cells[cellIdx][3],2/3)
 
-	if ME < Eaten:
+	if ME > Eaten:
 		cells[cellIdx][16] += 1
 		if cells[cellIdx][16] >= cells[cellIdx][9]:
 			# The Cell has surpassed it maximum time without enough food.
