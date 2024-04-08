@@ -23,14 +23,15 @@ def Metabolism(grid,cells,cellIdx):
 	Field_Oxygen = grid[1][cells[cellIdx][0],cells[cellIdx][1]]//1
 
 	z_1 = np.random.normal(loc=U_max, scale=0.2*U_max)
+    z_2 = np.random.normal(loc=cells[cellIdx][17], scale=0.2*cells[cellIdx][17])
 
-	U = z_1 * c * np.pow(cells[cellIdx][3],2/3) * (1 - (K_1 * cells[cellIdx][4]))
+	U = z_1 * np.pow(cells[cellIdx][3],2/3) * (1 - (cells[cellIdx][12] * cells[cellIdx][4]) - z_2 * Field_Glucose)
 
 	Eaten = np.min((U,Field_Glucose))
 
 	grid[0][cells[cellIdx][0],cells[cellIdx][1]] -= Eaten
 
-	ME = I * cells[cellIdx][3] + K_2 * grid[2][cells[cellIdx][0],cells[cellIdx][1]] * c * np.pow(cells[cellIdx][3],2/3)
+	ME = I * cells[cellIdx][3] + K_2 * grid[2][cells[cellIdx][0],cells[cellIdx][1]] * cells[cellIdx][13] * np.pow(cells[cellIdx][3],2/3)
 
 	if ME > Eaten:
 		cells[cellIdx][16] += 1
