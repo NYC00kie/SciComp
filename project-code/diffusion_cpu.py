@@ -18,12 +18,21 @@ def main_cpu():
 
     dim = (materials,width,height)
     
-    grid = np.random.uniform(0, 800, size=dim)
+    grid = numpy.zeros(dim, dtype=np.float32)
 
     yeast_cells = np.random.rand(cells_n, 16)
     
     #yeast_base = [0,0,0,1e-10,0,0,1e-11,12-11,2,2,0,0.00000000001,0.5]
+    # Glucose
+    # Sauerstoff
+    # Ethanol
+    # CO_2
 
+    grid[0] = np.random.uniform(0, 800, size=(width,height))
+    grid[1] = np.random.uniform(600, 800, size=(width,height))
+
+    yeast_cells = np.random.rand(16, cells_n)
+    
     plt.imshow(grid[0])
     plt.colorbar()
     plt.savefig("grid_pre.jpg")
