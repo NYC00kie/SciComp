@@ -1,7 +1,7 @@
 import numpy as np
 from KONSTANTS import *
 
-def Metabolism(grid,cells,cellIdx):
+def metabolism(grid,cells,cellIdx):
 	#
 	# U: aufgenommene Nahrungsmenge
 	# z_1: Zufallsvariabel mit Mittelwert U_max und Standardabweichung 0.2 * U_max
@@ -37,7 +37,9 @@ def Metabolism(grid,cells,cellIdx):
 		if cells[16][cellIdx] >= cells[9][cellIdx]:
 			# The Cell has surpassed it maximum time without enough food.
 			# It now has died
-			cells[cellIdx] = np.zeros(len(cells[cellIdx]))
+			for i in range(len(cells))
+				cells[i][cellIdx] = 0
+				
 			return;
 
 	else:
@@ -58,3 +60,12 @@ def Metabolism(grid,cells,cellIdx):
 			not_compensated = (Eaten - Field_Oxygen*1/6)
 			# for every glucose, 2 Ethanol will come from it
 			grid[2][cells[0][cellIdx],cells[1][cellIdx]] = 2 * not_compensated
+
+
+def do_cell(grid_name, cells_name, cellIdx):
+
+	# load shared memory
+	existing_shm_grid = shared_memory.SharedMemory(name=grid_name)
+    grid = np.ndarray((4,width,height), dtype=np.float32, buffer=existing_shm_grid.buf)
+    existing_shm_cells = shared_memory.SharedMemory(name=cells_name)
+    cells = np.ndarray((4,width,height), dtype=np.float32, buffer=existing_shm_cells.buf)
