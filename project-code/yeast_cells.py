@@ -25,7 +25,8 @@ def metabolism(grid,cells,cellIdx):
     Field_Ethanole = grid[2][cells[cellIdx][0],cells[cellIdx][1]]//1
 
 	z_1 = np.random.normal(loc=U_max, scale=0.2*U_max)
-    z_2 = np.random.normal(loc=cells[cellIdx][17], scale=0.2*cells[cellIdx][17])
+    z_2 = np.random.normal(loc=cells[cellIdx][16], scale=0.2*cells[cellIdx][16])
+    z_3 = np.random.normal(loc=cells[cellIdx][13], scale=0.2*cells[cellIdx][13])
 
 	U = z_1 * np.pow(cells[cellIdx][3],2/3) * (1 - (cells[cellIdx][12] * cells[cellIdx][4]) - z_2 * Field_Glucose)
 
@@ -33,11 +34,11 @@ def metabolism(grid,cells,cellIdx):
 
 	grid[0][cells[0][cellIdx],cells[1][cellIdx]] -= Eaten
 
-	ME = I * cells[cellIdx][3] + K_2 * Field_Ethanole * cells[cellIdx][13] * np.pow(cells[cellIdx][3],2/3)
+	ME = I * cells[cellIdx][3] + Field_Ethanole * z_3 * np.pow(cells[cellIdx][3],2/3)
 
 	if ME > Eaten:
-		cells[16][cellIdx] += 1
-		if cells[16][cellIdx] >= cells[9][cellIdx]:
+		cells[10][cellIdx] += 1
+		if cells[10][cellIdx] >= cells[9][cellIdx]:
 			# The Cell has surpassed it maximum time without enough food.
 			# It now has died
 			for i in range(len(cells))
@@ -68,6 +69,8 @@ def metabolism(grid,cells,cellIdx):
 
 def reproduction(grid, cells, cellIdx):
 	
+    
+    
 	pass 
 
 

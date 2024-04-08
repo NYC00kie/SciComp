@@ -22,7 +22,8 @@ def main_cpu():
 
     yeast_cells = np.random.rand(cells_n, 16)
     
-    #yeast_base = [0,0,0,1e-10,0,0,1e-11,12-11,2,2,0,0.00000000001,0.5]
+    #yeast_base = [0, 0, 0, 1e-10, 0, 0, 1e-11, 2e-11, 2, 2, 0, 0.00000000001, 0.5, 0.5, 5e-13, 0.1, 0.1]
+    
     # Glucose
     # Sauerstoff
     # Ethanol
