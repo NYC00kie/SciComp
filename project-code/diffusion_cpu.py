@@ -20,7 +20,7 @@ def main_cpu():
     
     grid = numpy.zeros(dim, dtype=np.longdouble)
 
-    yeast_cells = np.random.rand(cells_n, 16)
+    yeast_cells = np.zeros((cells_n, 17), dtype=np.longdouble)
     
     #yeast_base = [0, 0, 0, 1e-10, 0, 0, 1e-11, 2e-11, 2, 2, 0, 0.00000000001, 0.5, 0.5, 5e-13, 0.1, 0.1]
     
@@ -32,7 +32,7 @@ def main_cpu():
     grid[0] = np.random.uniform(0, 800, size=(width,height))
     grid[1] = np.random.uniform(600, 800, size=(width,height))
 
-    yeast_cells = np.random.rand(16, cells_n)
+    yeast_cells = np.random.rand(cells_n,16)
     
     plt.imshow(grid[0])
     plt.colorbar()
