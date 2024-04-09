@@ -1,6 +1,7 @@
 # Simulation Setup Konstants
 
 cells_n = 1
+cell_parameters = 18
 iterations = 1001
 materials = 4
 width = 1000
