@@ -1,4 +1,5 @@
 from KONSTANTS import *
+import subprocess
 from numba import cuda, vectorize, jit
 from numba.cuda.random import create_xoroshiro128p_states, xoroshiro128p_uniform_float32
 import numpy as np
@@ -23,7 +24,7 @@ def main_cpu():
     
     grid = np.zeros(dim,dtype=np.float64)
 
-    yeast_cells = np.zeros((cells_n, cell_parameters))
+    yeast_cells = np.zeros((cells_n,18),dtype=np.float64)
     
     # original yeast_base = [[0, 0, 0, 1e-10, 0, 0, 1e-11, 2e-11, 2, 2, 0, 0.00000000001, 0.5, 0.5, 5e-13, 0.1, 1/1600,0]]
     yeast_cells[0][0] = 0
@@ -41,7 +42,7 @@ def main_cpu():
     yeast_cells[0][12] = 3
     yeast_cells[0][13] = 0.5
     yeast_cells[0][14] = 1
-    yeast_cells[0][15] = 0.9
+    yeast_cells[0][15] = 1
     yeast_cells[0][16] = 1/1600
     yeast_cells[0][17] = 0
 
@@ -99,29 +100,34 @@ def main_cpu():
             print(f"Oxy:{np.sum(grid[1])}")
             print(f"Ethanol:{np.sum(grid[2])}")
             print(f"CO_2:{np.sum(grid[3])}")
+            print(yeast_cells)
             print(f"Cells:{len(yeast_cells)}")
             print(f"iterations:{i}")
 
         # diffuse material
         for entry in range(materials):
 
-            if i % 1 == 0:
-                plt.imshow(grid[entry])
-                plt.colorbar()
-                plt.savefig(f"grid_post_{entry}_{i}.jpg")
-                plt.clf()
+            # if i % 1 == 0:
+            #     plt.imshow(grid[entry])
+            #     plt.colorbar()
+            #     plt.savefig(f"./out/grid_post_{entry}_{i}.jpg")
+            #     plt.clf()
 
 
             grid[entry] = convolve2d(grid[entry], kernel, mode="same", boundary="wrap")        
 
         # do the cell, yes I said it.
-        for i in range(len(yeast_cells)):
-            yeast_cells = do_cell(grid,yeast_cells,i)
-            if i == 0:
-                for j in range(len(yeast_cells[0])):
-                    yeast0_params[j].append(yeast_cells[0][j])
+        for j in range(len(yeast_cells)):
+            yeast_cells = do_cell(grid,yeast_cells,j)
+            if j == 0:
+                for k in range(len(yeast_cells[0])):
+                    yeast0_params[k].append(yeast_cells[0][k])
 
-    for i in range(cell_parameters):
+
+    plt.plot(yeast0_params[0],yeast0_params[1],"r.")
+    plt.savefig(f"cell_params_XY.jpg")
+    plt.clf()
+    for i in range(2,cell_parameters):
         plt.plot(np.arange(iterations),yeast0_params[i])
         plt.savefig(f"cell_params_{i}.jpg")
         plt.clf()

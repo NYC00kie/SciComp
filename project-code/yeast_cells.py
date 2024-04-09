@@ -23,9 +23,9 @@ def metabolism(grid,cells,cellIdx):
 
 	# Nutriens Intake
 
-	Field_Glucose = grid[0][int(cells[0][cellIdx]),int(cells[0][cellIdx])]
-	Field_Oxygen = grid[1][int(cells[0][cellIdx]),int(cells[0][cellIdx])]
-	Field_Ethanole = grid[2][int(cells[0][cellIdx]),int(cells[0][cellIdx])]
+	Field_Glucose = grid[0][int(cells[cellIdx][0]),int(cells[cellIdx][1])]
+	Field_Oxygen = grid[1][int(cells[cellIdx][0]),int(cells[cellIdx][1])]
+	Field_Ethanole = grid[2][int(cells[cellIdx][0]),int(cells[cellIdx][1])]
 
 	z_1 = np.random.normal(loc=U_max, scale=0.2*U_max)
 	z_2 = np.random.normal(loc=cells[cellIdx][16], scale=0.2*cells[cellIdx][16])
@@ -34,13 +34,16 @@ def metabolism(grid,cells,cellIdx):
 
 	Eaten = np.min((U,Field_Glucose))
 
-	grid[0][int(cells[0][cellIdx]),int(cells[0][cellIdx])] -= Eaten
+	grid[0][int(cells[cellIdx][0]),int(cells[cellIdx][1])] -= Eaten
 
 	ME = I * cells[cellIdx][3] + Field_Ethanole * z_3 * np.power(cells[cellIdx][3],2/3)
 
-	print(f"[{(ME,Eaten)}]")
 
-	if ME > Eaten:
+	Difference = Eaten - ME
+
+	print(Difference)
+
+	if Difference < 0:
 		cells[cellIdx][10] += 1
 		if cells[cellIdx][10] >= cells[cellIdx][9]:
 			# The Cell has surpassed it maximum time without enough food.
@@ -49,24 +52,26 @@ def metabolism(grid,cells,cellIdx):
 
 	else:
 		# The Cell has got enough food and can add to its mass
-		delta_m = Y * (U - ME)
+		delta_m = Y * Difference
+		print(Y)
 		print(f"{delta_m=}")
 		cells[cellIdx][3] += delta_m
+		cells[cellIdx][10] = 0
 
 		# return ethanol if there was not enough oxygen to turn it all into water and CO_2
 		if Field_Oxygen - 6*Eaten >= 0:
 			# Perfect, the Oxygen cancelled out the Glucose, no Ethanol was produced
 			# remove Oxygen
-			grid[1][int(cells[0][cellIdx]),int(cells[0][cellIdx])] += - 6 * Eaten
+			grid[1][int(cells[cellIdx][0]),int(cells[cellIdx][1])] += - 6 * Eaten
 			# add CO_2
-			grid[3][int(cells[0][cellIdx]),int(cells[0][cellIdx])] += 6 * Eaten
+			grid[3][int(cells[cellIdx][0]),int(cells[cellIdx][1])] += 6 * Eaten
 		else:
 			# Oh No, the Oxygen wasnt enough to compensate the Glucose.
 			# How much Glucose was compensated ?
 			not_compensated = (Eaten - Field_Oxygen*1/6)
 			# for every glucose, 2 Ethanol will come from it
             # should be correct as we work with molecular amounts
-			grid[2][int(cells[0][cellIdx]),int(cells[0][cellIdx])] = 2 * not_compensated
+			grid[2][int(cells[cellIdx][0]),int(cells[cellIdx][1])] = 2 * not_compensated
 
 
 #@jit
@@ -126,18 +131,23 @@ def reproduction(grid, cells, cellIdx):
 	return cells
 #@jit
 def spread_cell(grid,cells,cellIdx):
-	d_x,d_y = np.random.randint(-2,high=2, size=2)
-	cells[cellIdx][0] += d_x
-	cells[cellIdx][1] += d_y
+	d_x,d_y = np.random.randint(-5,high=5, size=2)
+	cells[cellIdx][0] = (cells[cellIdx][0] + d_x) % width
+	cells[cellIdx][1] = (cells[cellIdx][1] + d_y) % height
 
 #@jit
 def do_cell(grid, cells, cellIdx):
 
 	# load shared memory
 	if np.sum(cells[cellIdx]) == 0:
-		return
+		return cells
 
 	metabolism(grid,cells,cellIdx)
+
+	if np.sum(cells[cellIdx]) == 0:
+		return cells
+
+
 	cells = reproduction(grid,cells,cellIdx)
 	spread_cell(grid,cells,cellIdx)
 
