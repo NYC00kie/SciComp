@@ -25,7 +25,26 @@ def main_cpu():
 
     #yeast_cells = np.zeros((cells_n, cell_parameters))
     
-    yeast_base = [[0, 0, 0, 1e-10, 0, 0, 1e-11, 2e-11, 2, 2, 0, 0.00000000001, 0.5, 0.5, 5e-13, 0.1, 1/1600,0]]
+    yeast_base = [[
+                    0,                      
+                    0,                      
+                    0,                        
+                    1e-10,                    #    
+                    0,                        #
+                    1,                        #                        
+                    11e-11,                   # Die Zelle muss fähig sein zu wachsen     
+                    1e-10,                    # Die Zelle muss ihre Startmasse verdoppeln   
+                    2,                        #
+                    2,                        #
+                    0,                        #
+                    0.00000000001,            #            
+                    0.5,                      #  
+                    0.5,                      #  
+                    5e-13,                    #    
+                    0.1,                      #  
+                    1/1600,                   #    
+                    0                         #
+                    ]]
     
     yeast_cells = np.array(yeast_base)
 
