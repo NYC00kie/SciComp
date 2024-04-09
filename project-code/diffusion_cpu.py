@@ -25,7 +25,7 @@ def main_cpu():
 
     #yeast_cells = np.zeros((cells_n, cell_parameters))
     
-    yeast_base = [[0, 0, 0, 1e-10, 0, 0, 1e-11, 2e-11, 2, 2, 0, 0.00000000001, 0.5, 0.5, 5e-13, 0.1, 0.1,0]]
+    yeast_base = [[0, 0, 0, 1e-10, 0, 0, 1e-11, 2e-11, 2, 2, 0, 0.00000000001, 0.5, 0.5, 5e-13, 0.1, 1/1600,0]]
     
     yeast_cells = np.array(yeast_base)
 
@@ -35,7 +35,7 @@ def main_cpu():
     # Ethanol
     # CO_2
 
-    grid[0] = np.random.uniform(0, 800, size=(width,height))
+    grid[0] = np.random.uniform(400, 800, size=(width,height))
     grid[1] = np.random.uniform(600, 800, size=(width,height))
   
     """  von hier an ist die Reihenfolge der Schritte aus dem 'Paper
@@ -55,6 +55,7 @@ def main_cpu():
     -update of new individual characteristics (wdym?)
     -repeat
     """
+    yeast_timeline = []
 
     for i in range(iterations):
         if i % 1 == 0:
@@ -79,6 +80,7 @@ def main_cpu():
         # do the cell, yes I said it.
         for i in range(len(yeast_cells)):
             yeast_cells,grid = do_cell(grid,yeast_cells,i)
+            yeast_timeline.append(yeast_cells)
 
 
 
