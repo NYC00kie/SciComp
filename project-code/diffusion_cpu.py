@@ -24,7 +24,8 @@ def main_cpu():
     
     grid = np.zeros(dim,dtype=np.float64)
 
-    yeast_cells = np.zeros((cells_n,18),dtype=np.float64)
+    yeast_cells = np.zeros((cells_n,cell_parameters),dtype=np.float64)
+
     yeast_cells[0][0] = 0
     yeast_cells[0][1] = 0
     yeast_cells[0][2] = 0
@@ -36,13 +37,14 @@ def main_cpu():
     yeast_cells[0][8] = 2
     yeast_cells[0][9] = 2
     yeast_cells[0][10] = 0
-    yeast_cells[0][11] = 0.00000000001,
+    yeast_cells[0][11] = 0.0001
     yeast_cells[0][12] = 0.5
     yeast_cells[0][13] = 0.5
     yeast_cells[0][14] = 5e-13
     yeast_cells[0][15] = 0.1
     yeast_cells[0][16] = 1/1600
     yeast_cells[0][17] = 0
+    yeast_cells[0][18] = yeast_cells[0][3]
 
 
 
@@ -90,11 +92,12 @@ def main_cpu():
     14:[],
     15:[],
     16:[],
-    17:[]
+    17:[],
+    18:[]
     }
     print(iterations)
     for i in range(iterations):
-        if i % 1 == 0:
+        if i % loggingit == 0:
             print(f"Glucose:{np.sum(grid[0])}")
             print(f"Oxy:{np.sum(grid[1])}")
             print(f"Ethanol:{np.sum(grid[2])}")
@@ -106,11 +109,11 @@ def main_cpu():
         # diffuse material
         for entry in range(materials):
 
-            # if i % 1 == 0:
-            #     plt.imshow(grid[entry])
-            #     plt.colorbar()
-            #     plt.savefig(f"./out/grid_post_{entry}_{i}.jpg")
-            #     plt.clf()
+            if i % loggingit == 0:
+                plt.imshow(grid[entry])
+                plt.colorbar()
+                plt.savefig(f"./out/grid_post_{entry}_{i//loggingit}.jpg",dpi=800)
+                plt.clf()
 
 
             grid[entry] = convolve2d(grid[entry], kernel, mode="same", boundary="wrap")        
