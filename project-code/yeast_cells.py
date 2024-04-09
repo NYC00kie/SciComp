@@ -85,35 +85,36 @@ def reproduction(grid, cells, cellIdx):
 	#
 	#
 	#
-	
-	if cells[cellIdx][5] == 1:
-		# Budding Phase 1
-
-		delta_m = cells[cellIdx][3] - cells[cellIdx][6]
-		if cells[cellIdx][7] <= delta_m:
-			# cell reached minimal budding mass for phase 2
-			cells[cellIdx][5] = 2
+	     
+    # Hier war geplant, vom Modell aufgrund von Redundanz abzuweichen
+    if cells[cellIdx][5] == 1:
+        # cell cyclus phase 1: growing
+        if cells[cellIdx][3] >= cells[cellIdx][6]:
+            #if the current mass excedes the starting mass for phase 2
+            cells[cellIdx][5] = 2
+    
 
 	else:
-		# Budding Phase
+		# cell cyclus phase 2: budding 
 		delta_m = cells[cellIdx][3] - cells[cellIdx][6]
-		if 2 * cells[cellIdx][7] <= delta_m and cells[cellIdx][17] >= cells[cellIdx][8] :
+		if cells[cellIdx][7] <= delta_m and cells[cellIdx][17] >= cells[cellIdx][8] :
 			# Cell division requirements are met.
 			# The time has come
 			# Execute Order 66
 
-			cells[cellIdx][3] += - delta_m
-
+			cells[cellIdx][3] += - cells[cellIdx][7]
+            
+            # aging
 			cells[cellIdx][4] += 1
 
 			babycell = [[
 						cells[cellIdx][0],
 						cells[cellIdx][1],
 						cells[cellIdx][2],
-						delta_m,
+						cells[cellIdx][7],
+						0,
 						1,
-						1,
-						delta_m,
+						cells[cellIdx][6],
 						cells[cellIdx][7],
 						cells[cellIdx][8],
 						cells[cellIdx][9],
@@ -126,6 +127,10 @@ def reproduction(grid, cells, cellIdx):
 						cells[cellIdx][16],
 						0
 						]]
+            
+            z_4 = np.random.normal(loc=U_max, scale=0.2*U_max)
+            
+            cells[cellIdx][6] += 0.1 * cells[cellIdx][3]
 
 			np.append(cells, babycell, axis=0)
 
