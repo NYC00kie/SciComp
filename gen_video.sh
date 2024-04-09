@@ -5,7 +5,7 @@ for i in range(4):
         subprocess.call([
         "ffmpeg",
         "-framerate", "2",
-        "-i", f"grid_post_{i}_%d.jpg",
+        "-i", f"./out/grid_post_{i}_%d.jpg",
         "-c:v", "libx264",
         "-r", "2",
         f"output_{i}.mp4",
