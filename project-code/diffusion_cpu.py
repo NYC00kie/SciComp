@@ -39,22 +39,22 @@ def main_cpu():
     grid[1] = np.random.uniform(600, 800, size=(width,height))
   
     """  von hier an ist die Reihenfolge der Schritte aus dem 'Paper
-   INDISIM-YEAST: an individual-based simulator on a website for 
-   experimenting and investigating diverse dynamics of yeast 
-   populations in liquid media' zu beachten:
-   
-   s-random motion
-   s-uptake of nutrient particles
-   s-enough nutrient particles for maintanance?
-   s-Enough nutrient particles for new biomass?
-   s-production and excretion of ethanole
-   s-buding phase?
-   -cell division, new yeast cell (mutation!)
-   -unbudded phase
-   -requirments to be viable?
-   -update of new individual characteristics (wdym?)
-   -repeat
-   """
+    INDISIM-YEAST: an individual-based simulator on a website for 
+    experimenting and investigating diverse dynamics of yeast 
+    populations in liquid media' zu beachten:
+
+    s-random motion
+    s-uptake of nutrient particles
+    s-enough nutrient particles for maintanance?
+    s-Enough nutrient particles for new biomass?
+    s-production and excretion of ethanole
+    s-buding phase?
+    -cell division, new yeast cell (mutation!)
+    -unbudded phase
+    -requirments to be viable?
+    -update of new individual characteristics (wdym?)
+    -repeat
+    """
 
     for i in range(iterations):
         if i % 1 == 0:
