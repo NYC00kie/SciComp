@@ -57,8 +57,8 @@ Cell indices:
 3: mass
 4: genealogical age
 5: reproduction phase
-6: start masse
-7: minimum growth of biomass for the initiation of the budding phase
+6: Startmasse für Zyklusphase zwei
+7: minimum growth of biomass for the initiation of the next budding phase
 8: the minimum time required to complete the budding phase
 9: its survival time without satisfying its metabolic requirements.
 10: Mortalitätsindex

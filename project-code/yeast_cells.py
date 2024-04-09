@@ -79,37 +79,40 @@ def reproduction(grid, cells, cellIdx):
 	#
 	#
 	#
-	
-	if cells[cellIdx][5] == 1:
-		# Budding Phase 1
-
-		delta_m = cells[cellIdx][3] - cells[cellIdx][6]
+	     
+    # Hier war geplant, vom Modell aufgrund von Redundanz abzuweichen
+    if cells[cellIdx][5] == 1:
+        # cell cyclus phase 1: growing
+        delta_m = cells[cellIdx][3] - cells[cellIdx][6]
 		print(f"minimal biomass growth, delta_m [{(cells[cellIdx][7],delta_m)}]")
-		if cells[cellIdx][7] >= delta_m:
-			# cell reached minimal budding mass for phase 2
-			cells[cellIdx][5] = 2
+
+        if cells[cellIdx][3] >= cells[cellIdx][6]:
+            #if the current mass excedes the starting mass for phase 2
+            cells[cellIdx][5] = 2
+    
 
 	else:
-		# Budding Phase 2
+		
 		delta_m = cells[cellIdx][3] - cells[cellIdx][6]
-		if 2 * cells[cellIdx][7] <= delta_m and cells[cellIdx][17] >= cells[cellIdx][8] :
+		if cells[cellIdx][7] <= delta_m and cells[cellIdx][17] >= cells[cellIdx][8] :
 			# Cell division requirements are met.
 			# The time has come
 			# Execute Order 66
 
-			cells[cellIdx][5] = 1
 			cells[cellIdx][3] += - delta_m
-
+            
+            # aging
 			cells[cellIdx][4] += 1
+            cells[cellIdx][5] = 1
 
 			babycell = [[
 						cells[cellIdx][0],
 						cells[cellIdx][1],
 						cells[cellIdx][2],
 						delta_m,
+						0,
 						1,
-						1,
-						delta_m,
+						cells[cellIdx][6],
 						cells[cellIdx][7],
 						cells[cellIdx][8],
 						cells[cellIdx][9],
@@ -122,6 +125,10 @@ def reproduction(grid, cells, cellIdx):
 						cells[cellIdx][16],
 						0
 						]]
+            
+            #	Mutation
+            #
+            # cells[cellIdx][6] += 0.1 * cells[cellIdx][3]
 
 			cells = np.append(cells, babycell, axis=0)
 
@@ -129,6 +136,7 @@ def reproduction(grid, cells, cellIdx):
 			# The Time has not come
 			cells[cellIdx][17] += 1
 	return cells
+
 #@jit
 def spread_cell(grid,cells,cellIdx):
 	d_x,d_y = np.random.randint(-5,high=5, size=2)
