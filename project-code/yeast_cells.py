@@ -84,7 +84,7 @@ def reproduction(grid, cells, cellIdx):
     if cells[cellIdx][5] == 1:
         # cell cyclus phase 1: growing
         delta_m = cells[cellIdx][3] - cells[cellIdx][6]
-		print(f"minimal biomass growth, delta_m [{(cells[cellIdx][7],delta_m)}]")
+        print(f"minimal biomass growth, delta_m [{(cells[cellIdx][7],delta_m)}]")
 
         if cells[cellIdx][3] >= cells[cellIdx][6]:
             #if the current mass excedes the starting mass for phase 2
