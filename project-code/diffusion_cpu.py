@@ -23,8 +23,10 @@ def main_cpu():
     
     grid = np.zeros(dim,dtype=np.float64)
 
-    #yeast_cells = np.zeros((cells_n, cell_parameters))
-    
+    yeast_cells = np.zeros((cells_n, cell_parameters))
+   
+#deine Ordnung ist besser, aber hier sind nochmal an den Realfall angepasste Werte   
+"""
     yeast_base = [[
                     0,                      
                     0,                      
@@ -47,8 +49,30 @@ def main_cpu():
                     ]]
     
     yeast_cells = np.array(yeast_base)
+"""
+    # original yeast_base = [[0, 0, 0, 1e-10, 0, 0, 1e-11, 2e-11, 2, 2, 0, 0.00000000001, 0.5, 0.5, 5e-13, 0.1, 1/1600,0]]
+    yeast_cells[0][0] = 0
+    yeast_cells[0][1] = 0
+    yeast_cells[0][2] = 0
+    yeast_cells[0][3] = 100
+    yeast_cells[0][4] = 0
+    yeast_cells[0][5] = 1
+    yeast_cells[0][6] = yeast_cells[0][3]
+    yeast_cells[0][7] = 100
+    yeast_cells[0][8] = 1
+    yeast_cells[0][9] = 2
+    yeast_cells[0][10] = 0
+    yeast_cells[0][11] = 10
+    yeast_cells[0][12] = 3
+    yeast_cells[0][13] = 0.5
+    yeast_cells[0][14] = 1
+    yeast_cells[0][15] = 0.9
+    yeast_cells[0][16] = 1/1600
+    yeast_cells[0][17] = 0
 
-    print(len(yeast_cells))
+
+
+    print(len(yeast_cells[0]))
     # Glucose
     # Sauerstoff
     # Ethanol
@@ -74,8 +98,27 @@ def main_cpu():
     -update of new individual characteristics (wdym?)
     -repeat
     """
-    yeast_timeline = []
-
+    yeast0_params = {
+    0:[],
+    1:[],
+    2:[],
+    3:[],
+    4:[],
+    5:[],
+    6:[],
+    7:[],
+    8:[],
+    9:[],
+    10:[],
+    11:[],
+    12:[],
+    13:[],
+    14:[],
+    15:[],
+    16:[],
+    17:[]
+    }
+    print(iterations)
     for i in range(iterations):
         if i % 1 == 0:
             print(f"Glucose:{np.sum(grid[0])}")
@@ -83,6 +126,7 @@ def main_cpu():
             print(f"Ethanol:{np.sum(grid[2])}")
             print(f"CO_2:{np.sum(grid[3])}")
             print(f"Cells:{len(yeast_cells)}")
+            print(f"iterations:{i}")
 
         # diffuse material
         for entry in range(materials):
@@ -98,10 +142,15 @@ def main_cpu():
 
         # do the cell, yes I said it.
         for i in range(len(yeast_cells)):
-            yeast_cells,grid = do_cell(grid,yeast_cells,i)
-            yeast_timeline.append(yeast_cells)
+            yeast_cells = do_cell(grid,yeast_cells,i)
+            if i == 0:
+                for j in range(len(yeast_cells[0])):
+                    yeast0_params[j].append(yeast_cells[0][j])
 
-
+    for i in range(cell_parameters):
+        plt.plot(np.arange(iterations),yeast0_params[i])
+        plt.savefig(f"cell_params_{i}.jpg")
+        plt.clf()
 
 if __name__ == "__main__":
  
