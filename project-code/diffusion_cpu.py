@@ -54,9 +54,9 @@ def main_cpu():
     # Ethanol
     # CO_2
 
-    grid[0] = np.random.uniform(400, 800, size=(width,height))
-    grid[1] = np.random.uniform(600, 800, size=(width,height))
-  
+    grid[0] = np.random.uniform(4, 8, size=(width,height))*10e-5
+    grid[1] = np.random.uniform(6, 8, size=(width,height))*10e-5
+
     """  von hier an ist die Reihenfolge der Schritte aus dem 'Paper
     INDISIM-YEAST: an individual-based simulator on a website for 
     experimenting and investigating diverse dynamics of yeast 
