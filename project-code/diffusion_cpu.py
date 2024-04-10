@@ -73,26 +73,9 @@ def main_cpu():
     -update of new individual characteristics (wdym?)
     -repeat
     """
-    yeast0_params = {
+    tracking_params = {
     0:[],
-    1:[],
-    2:[],
-    3:[],
-    4:[],
-    5:[],
-    6:[],
-    7:[],
-    8:[],
-    9:[],
-    10:[],
-    11:[],
-    12:[],
-    13:[],
-    14:[],
-    15:[],
-    16:[],
-    17:[],
-    18:[]
+    1:[]
     }
     print(iterations)
     for i in range(iterations):
@@ -118,18 +101,20 @@ def main_cpu():
             grid[entry] = convolve2d(grid[entry], kernel, mode="same", boundary="wrap")        
 
         # do the cell, yes I said it.
+        alive = 0
+        dead = 0
         for j in range(len(yeast_cells)):
-            yeast_cells = do_cell(grid,yeast_cells,j)
-            if j == 0:
-                for k in range(len(yeast_cells[0])):
-                    yeast0_params[k].append(yeast_cells[0][k])
+            if np.sum(yeast_cells[j]) == 0:
+                dead += 1
+            else:
+                alive += 1
+                yeast_cells = do_cell(grid,yeast_cells,j)
 
+        tracking_params[0].append(alive)
+        tracking_params[1].append(dead)
 
-    plt.plot(yeast0_params[0],yeast0_params[1],"r.")
-    plt.savefig(f"cell_params_XY.jpg")
-    plt.clf()
-    for i in range(2,cell_parameters):
-        plt.plot(np.arange(iterations),yeast0_params[i])
+    for i in range(len(tracking_params)):
+        plt.plot(np.arange(iterations),tracking_params[i])
         plt.savefig(f"cell_params_{i}.jpg")
         plt.clf()
 
