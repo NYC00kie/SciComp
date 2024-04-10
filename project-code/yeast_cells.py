@@ -80,8 +80,6 @@ def reproduction(grid, cells, cellIdx):
     # Hier war geplant, vom Modell aufgrund von Redundanz abzuweichen
     if cells[cellIdx][5] == 1:
         # cell cyclus phase 1: growing
-        delta_m = cells[cellIdx][3] - cells[cellIdx][18]
-
         if cells[cellIdx][3] >= cells[cellIdx][6]:
             #if the current mass excedes the starting mass for phase 2
             cells[cellIdx][5] = 2
@@ -89,7 +87,7 @@ def reproduction(grid, cells, cellIdx):
 
     else:
         
-        delta_m = cells[cellIdx][3] - cells[cellIdx][18]
+        delta_m = cells[cellIdx][3] - cells[cellIdx][6]
         if cells[cellIdx][7] <= delta_m and cells[cellIdx][17] >= cells[cellIdx][8] :
             # Cell division requirements are met.
             # The time has come
@@ -120,7 +118,7 @@ def reproduction(grid, cells, cellIdx):
                         cells[cellIdx][15],
                         cells[cellIdx][16],
                         0,
-                        delta_m
+                        0
                         ]]
             
             #   Mutation
