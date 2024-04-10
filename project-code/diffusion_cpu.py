@@ -13,7 +13,6 @@ from yeast_cells import do_cell
 
 def main_cpu():
 
-
     np.random.seed(0)
     # creating diffusion kernel
     p = 0.125
@@ -29,15 +28,15 @@ def main_cpu():
     yeast_cells[0][0] = 0
     yeast_cells[0][1] = 0
     yeast_cells[0][2] = 0
-    yeast_cells[0][3] = 1e-10
+    yeast_cells[0][3] = 1e-5
     yeast_cells[0][4] = 0
     yeast_cells[0][5] = 1
-    yeast_cells[0][6] = 11e-11
-    yeast_cells[0][7] = 1e-10
+    yeast_cells[0][6] = 11e-6
+    yeast_cells[0][7] = 1e-5
     yeast_cells[0][8] = 2
     yeast_cells[0][9] = 2
     yeast_cells[0][10] = 0
-    yeast_cells[0][11] = 0.0001
+    yeast_cells[0][11] = 0.1
     yeast_cells[0][12] = 0.5
     yeast_cells[0][13] = 0.5
     yeast_cells[0][14] = 5e-13
