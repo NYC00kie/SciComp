@@ -46,7 +46,7 @@ def metabolism(grid,cells,cellIdx):
         if cells[cellIdx][10] >= cells[cellIdx][9]:
             # The Cell has surpassed it maximum time without enough food.
             # It now has died
-            cells[cellIdx] = np.zeros(cell_parameters)
+            cells[cellIdx] = [0] * cell_parameters
 
     else:
         # The Cell has got enough food and can add to its mass
@@ -81,6 +81,7 @@ def reproduction(grid, cells, cellIdx):
     if cells[cellIdx][5] == 1:
         # cell cyclus phase 1: growing
         delta_m = cells[cellIdx][3] - cells[cellIdx][18]
+        print(delta_m)
 
         if cells[cellIdx][3] >= cells[cellIdx][6]:
             #if the current mass excedes the starting mass for phase 2
@@ -90,6 +91,7 @@ def reproduction(grid, cells, cellIdx):
     else:
         
         delta_m = cells[cellIdx][3] - cells[cellIdx][18]
+        print(delta_m)
         if cells[cellIdx][7] <= delta_m and cells[cellIdx][17] >= cells[cellIdx][8] :
             # Cell division requirements are met.
             # The time has come
@@ -101,7 +103,7 @@ def reproduction(grid, cells, cellIdx):
             cells[cellIdx][4] += 1
             cells[cellIdx][5] = 1
 
-            babycell = [[
+            babycell = [
                         cells[cellIdx][0],
                         cells[cellIdx][1],
                         cells[cellIdx][2],
@@ -121,13 +123,13 @@ def reproduction(grid, cells, cellIdx):
                         cells[cellIdx][16],
                         0,
                         delta_m
-                        ]]
+                        ]
             
             #   Mutation
             #
             # cells[cellIdx][6] += 0.1 * cells[cellIdx][3]
 
-            cells = np.append(cells, babycell, axis=0)
+            cells.append(babycell)
 
         elif cells[cellIdx][17] <= cells[cellIdx][8]:
             # The Time has not come
@@ -136,25 +138,27 @@ def reproduction(grid, cells, cellIdx):
 
 #@jit
 def spread_cell(grid,cells,cellIdx):
-
+    print("spreading")
     d_x,d_y = np.random.randint(-3,high=4, size=2)
+    print(d_x,d_y)
     cells[cellIdx][0] = (cells[cellIdx][0] + d_x) % width
     cells[cellIdx][1] = (cells[cellIdx][1] + d_y) % height
 
 #@jit
 def do_cell(grid, cells, cellIdx):
 
+    print(cells[cellIdx])
     # load shared memory
     if np.sum(cells[cellIdx]) == 0:
-        return cells
+        return cells, grid
 
     metabolism(grid,cells,cellIdx)
 
     if np.sum(cells[cellIdx]) == 0:
-        return cells
+        return cells, grid
 
 
     cells = reproduction(grid,cells,cellIdx)
     spread_cell(grid,cells,cellIdx)
 
-    return cells
+    return cells, grid
