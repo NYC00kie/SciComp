@@ -136,7 +136,7 @@ def reproduction(grid, cells, cellIdx):
 
 #@jit
 def spread_cell(grid,cells,cellIdx):
-    d_x,d_y = np.random.randint(-5,high=6, size=2)
+    d_x,d_y = np.random.randint(-3,high=4, size=2)
     cells[cellIdx][0] = (cells[cellIdx][0] + d_x) % width
     cells[cellIdx][1] = (cells[cellIdx][1] + d_y) % height
 
