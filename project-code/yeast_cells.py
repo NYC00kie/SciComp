@@ -125,7 +125,7 @@ def reproduction(grid, cells, cellIdx):
             
             #   Mutation
             #
-            # cells[cellIdx][6] += 0.1 * cells[cellIdx][3]
+            cells[cellIdx][6] += 0.1 * cells[cellIdx][3]
 
             cells = np.append(cells, babycell, axis=0)
 
