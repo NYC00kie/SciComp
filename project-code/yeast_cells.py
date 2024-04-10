@@ -41,6 +41,8 @@ def metabolism(grid,cells,cellIdx):
 
     Difference = Eaten - ME
 
+    # print(Difference, Eaten, ME)
+
     if Difference < 0:
         cells[cellIdx][10] += 1
         if cells[cellIdx][10] >= cells[cellIdx][9]:
@@ -118,7 +120,7 @@ def reproduction(grid, cells, cellIdx):
                         cells[cellIdx][15],
                         cells[cellIdx][16],
                         0,
-                        0
+                        delta_m
                         ]]
             
 
