@@ -4,7 +4,7 @@ from KONSTANTS import *
 import sys
 
 
-#@jit
+@jit
 def metabolism(grid,cells,cellIdx):
     #
     # U: aufgenommene Nahrungsmenge
@@ -32,7 +32,7 @@ def metabolism(grid,cells,cellIdx):
     z_3 = np.random.normal(loc=cells[cellIdx][13], scale=0.2*cells[cellIdx][13])
     U = z_1 * np.power(cells[cellIdx][3],2/3) * (1 - (cells[cellIdx][12] * cells[cellIdx][4]) - z_2 * Field_Glucose)
 
-    Eaten = np.min((U,Field_Glucose))
+    Eaten = min((U,Field_Glucose))
 
     grid[0][int(cells[cellIdx][0]),int(cells[cellIdx][1])] -= Eaten
 
@@ -71,7 +71,7 @@ def metabolism(grid,cells,cellIdx):
             grid[2][int(cells[cellIdx][0]),int(cells[cellIdx][1])] = 2 * not_compensated
 
 
-#@jit
+# @jit
 def reproduction(grid, cells, cellIdx):
     #
     #
@@ -123,9 +123,7 @@ def reproduction(grid, cells, cellIdx):
                         delta_m
                         ]]
             
-            #   Mutation
-            #
-            # cells[cellIdx][6] += 0.1 * cells[cellIdx][3]
+            cells[cellIdx][6] += 0.1 * cells[cellIdx][3]
 
             cells = np.append(cells, babycell, axis=0)
 
@@ -144,17 +142,8 @@ def spread_cell(grid,cells,cellIdx):
 #@jit
 def do_cell(grid, cells, cellIdx):
 
-    # load shared memory
-    if np.sum(cells[cellIdx]) == 0:
-        return cells
-
-    metabolism(grid,cells,cellIdx)
-
-    if np.sum(cells[cellIdx]) == 0:
-        return cells
-
-
     cells = reproduction(grid,cells,cellIdx)
     spread_cell(grid,cells,cellIdx)
+    metabolism(grid,cells,cellIdx)
 
     return cells
