@@ -8,4 +8,4 @@ width = 1000
 height = 1000
 
 # Debugging Constants
-loggingit = 50
+loggingit = 100
