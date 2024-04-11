@@ -4,7 +4,7 @@ from KONSTANTS import *
 import sys
 
 
-@jit
+#@jit
 def metabolism(grid,cells,cellIdx):
     #
     # U: aufgenommene Nahrungsmenge
@@ -58,16 +58,16 @@ def metabolism(grid,cells,cellIdx):
         cells[cellIdx][10] = 0
 
         # return ethanol if there was not enough oxygen to turn it all into water and CO_2
-        if Field_Oxygen - 6*Eaten >= 0:
+        if Field_Oxygen - 2 * Eaten >= 0:
             # Perfect, the Oxygen cancelled out the Glucose, no Ethanol was produced
             # remove Oxygen
-            grid[1][int(cells[cellIdx][0]),int(cells[cellIdx][1])] += - 6 * Eaten
+            grid[1][int(cells[cellIdx][0]),int(cells[cellIdx][1])] += - 2 * Eaten
             # add CO_2
-            grid[3][int(cells[cellIdx][0]),int(cells[cellIdx][1])] += 6 * Eaten
+            grid[3][int(cells[cellIdx][0]),int(cells[cellIdx][1])] += 2 * Eaten
         else:
             # Oh No, the Oxygen wasnt enough to compensate the Glucose.
             # How much Glucose was compensated ?
-            not_compensated = (Eaten - Field_Oxygen*1/6)
+            not_compensated = (Eaten - Field_Oxygen*1/2)
             # for every glucose, 2 Ethanol will come from it
             # should be correct as we work with molecular amounts
             grid[2][int(cells[cellIdx][0]),int(cells[cellIdx][1])] = 2 * not_compensated
@@ -137,9 +137,7 @@ def reproduction(grid, cells, cellIdx):
 
 #@jit
 def spread_cell(grid,cells,cellIdx):
-    print("spreading")
     d_x,d_y = np.random.randint(-3,high=4, size=2)
-    print(d_x,d_y)
     cells[cellIdx][0] = (cells[cellIdx][0] + d_x) % width
     cells[cellIdx][1] = (cells[cellIdx][1] + d_y) % height
 

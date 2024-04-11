@@ -4,9 +4,20 @@ from numba import jit
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-from multiprocessing import Pool
+from multiprocessing import Pool, cpu_count
 from scipy.signal import convolve2d
 from yeast_cells import do_cell
+import json
+from numpyencoder import NumpyEncoder
+
+def diffuse(grid_part):
+    p = 0.125
+    kernel = np.ones((3, 3)) * p
+    kernel[1, 1] = 0
+
+    grid_part = convolve2d(grid_part, kernel, mode="same", boundary="wrap")
+
+    return grid_part
 
 def main_cpu():
 
@@ -51,7 +62,7 @@ def main_cpu():
     # CO_2
 
     grid[0] = np.full((width,height),36)*10e-3
-    grid[1] = np.full((width,height),0.1)*10e-3
+    grid[1] = np.full((width,height),1)*10e-3
 
 
     """  von hier an ist die Reihenfolge der Schritte aus dem 'Paper
@@ -76,7 +87,7 @@ def main_cpu():
     1:[]
     }
     print(iterations)
-    with Pool(6) as p:
+    with Pool(cpu_count()) as p:
         for i in range(iterations):
             if i % loggingit == 0:
                 print(f"Glucose:{np.sum(grid[0])}")
@@ -89,6 +100,10 @@ def main_cpu():
                 print(f"iterations:{i}")
 
             # diffuse material
+
+            for j in range(diff_per_it):
+                grid = p.map(diffuse,grid)
+
             for entry in range(materials):
 
                 if i % loggingit == 0:
@@ -97,8 +112,6 @@ def main_cpu():
                     plt.savefig(f"./out/grid_post_{entry}_{i//loggingit}.jpg",dpi=800)
                     plt.clf()
 
-
-                grid[entry] = convolve2d(grid[entry], kernel, mode="same", boundary="wrap")        
 
             # do the cell, yes I said it.
 
