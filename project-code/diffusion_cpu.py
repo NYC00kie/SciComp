@@ -25,20 +25,20 @@ def main_cpu():
     yeast_cells[0][0] = 0
     yeast_cells[0][1] = 0
     yeast_cells[0][2] = 0
-    yeast_cells[0][3] = 1e-5
+    yeast_cells[0][3] = 1
     yeast_cells[0][4] = 0
     yeast_cells[0][5] = 1
-    yeast_cells[0][6] = 11e-6
-    yeast_cells[0][7] = 1e-5
+    yeast_cells[0][6] = 1.1
+    yeast_cells[0][7] = 1
     yeast_cells[0][8] = 2
     yeast_cells[0][9] = 2
     yeast_cells[0][10] = 0
-    yeast_cells[0][11] = 0.1
-    yeast_cells[0][12] = 0.5
-    yeast_cells[0][13] = 0.5
-    yeast_cells[0][14] = 5e-13
-    yeast_cells[0][15] = 0.1
-    yeast_cells[0][16] = 1/1600
+    yeast_cells[0][11] = 0.5
+    yeast_cells[0][12] = 1/30
+    yeast_cells[0][13] = 1/7200
+    yeast_cells[0][14] = 0.01
+    yeast_cells[0][15] = 0.2
+    yeast_cells[0][16] = 1/3900
     yeast_cells[0][17] = 0
     yeast_cells[0][18] = yeast_cells[0][3]
 
@@ -50,8 +50,9 @@ def main_cpu():
     # Ethanol
     # CO_2
 
-    grid[0] = np.random.uniform(7, 8, size=(width,height))
-    grid[1] = np.random.uniform(7, 8, size=(width,height))
+    grid[0] = np.full((width,height),36)*10e-3
+    grid[1] = np.full((width,height),0.1)*10e-3
+
 
     """  von hier an ist die Reihenfolge der Schritte aus dem 'Paper
     INDISIM-YEAST: an individual-based simulator on a website for 
@@ -70,26 +71,9 @@ def main_cpu():
     -update of new individual characteristics (wdym?)
     -repeat
     """
-    yeast0_params = {
+    tracking_params = {
     0:[],
-    1:[],
-    2:[],
-    3:[],
-    4:[],
-    5:[],
-    6:[],
-    7:[],
-    8:[],
-    9:[],
-    10:[],
-    11:[],
-    12:[],
-    13:[],
-    14:[],
-    15:[],
-    16:[],
-    17:[],
-    18:[]
+    1:[]
     }
     print(iterations)
     with Pool(6) as p:
@@ -116,6 +100,7 @@ def main_cpu():
 
                 grid[entry] = convolve2d(grid[entry], kernel, mode="same", boundary="wrap")        
 
+            # do the cell, yes I said it.
 
             args = [(grid,yeast_cells,j) for j in range(len(yeast_cells))]
             # do the cell, yes I said it.
@@ -130,15 +115,24 @@ def main_cpu():
 
             yeast_cells = new_yeast
 
+            alive = 0
+            dead = 0
+            for j in range(len(yeast_cells)):
+                if np.sum(yeast_cells[j]) == 0:
+                    dead += 1
+                else:
+                    alive += 1
+
+            tracking_params[0].append(alive)
+            tracking_params[1].append(dead)
 
 
-    # plt.plot(yeast0_params[0],yeast0_params[1],"r.")
-    # plt.savefig(f"cell_params_XY.jpg")
-    # plt.clf()
-    # for i in range(2,cell_parameters):
-    #     plt.plot(np.arange(iterations),yeast0_params[i])
-    #     plt.savefig(f"cell_params_{i}.jpg")
-    #     plt.clf()
+
+    for i in range(len(tracking_params)):
+        plt.plot(np.arange(iterations),tracking_params[i])
+        plt.savefig(f"cell_params_{i}.jpg")
+        plt.clf()
+
 
 if __name__ == "__main__":
  
