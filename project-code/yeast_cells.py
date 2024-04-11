@@ -122,13 +122,22 @@ def reproduction(grid, cells, cellIdx):
                         0,
                         delta_m
                         ]]
-            
 
             cells[cellIdx][6] += 0.1 * cells[cellIdx][3]
-
+            
+            #what do we want? An n Genen wird eine Mutation verursacht
+            genes = [6, 7, 8, 9, 11, 12, 13, 14, 15, 16]
+            mutation_frequency = 2
+            mutation = np.random.choice(genes, size = mutation_frequency)
+            print(mutation)
+            for n in range(0, mutation_frequency):
+                m_1 = np.random.normal(loc = 0, scale = 0.2*cells[cellIdx][mutation[n]])
+                cells[cellIdx][mutation[n]] += m_1
+                
             cells = np.append(cells, babycell, axis=0)
 
-        elif cells[cellIdx][17] <= cells[cellIdx][8]:
+        elif cells[cellIdx][17] <= cel
+        ls[cellIdx][8]:
             # The Time has not come
             cells[cellIdx][17] += 1
     return cells
