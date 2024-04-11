@@ -87,7 +87,7 @@ def main_cpu():
     1:[]
     }
     print(iterations)
-    with Pool(cpu_count()) as p:
+    with Pool() as p:
         for i in range(iterations):
             if i % loggingit == 0:
                 print(f"Glucose:{np.sum(grid[0])}")
