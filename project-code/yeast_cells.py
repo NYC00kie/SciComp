@@ -136,10 +136,10 @@ def reproduction(grid, cells, cellIdx):
                 
             cells = np.append(cells, babycell, axis=0)
 
-        elif cells[cellIdx][17] <= cel
-        ls[cellIdx][8]:
+        elif cells[cellIdx][17] <= cells[cellIdx][8]:
             # The Time has not come
             cells[cellIdx][17] += 1
+            
     return cells
 
 #@jit
