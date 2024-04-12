@@ -6,6 +6,7 @@ iterations = 4000
 materials = 4
 width = 1000
 height = 1000
+diff_per_it = 5
 
 # Debugging Constants
 loggingit = 50
