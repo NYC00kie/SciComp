@@ -54,7 +54,7 @@ def main_cpu():
     # CO_2
 
     grid[0] = np.full((width,height),36)*10e-3
-    grid[1] = np.full((width,height),0.1)*10e-3
+    grid[1] = np.full((width,height),100)*10e-3
 
     """  von hier an ist die Reihenfolge der Schritte aus dem 'Paper
     INDISIM-YEAST: an individual-based simulator on a website for 

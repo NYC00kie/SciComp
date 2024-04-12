@@ -73,7 +73,7 @@ def metabolism(grid,cells,cellIdx):
             grid[2][int(cells[cellIdx][0]),int(cells[cellIdx][1])] = 2 * not_compensated
 
 
-# @jit
+@jit
 def reproduction(grid, cells, cellIdx):
     #
     #
@@ -101,32 +101,32 @@ def reproduction(grid, cells, cellIdx):
             cells[cellIdx][4] += 1
             cells[cellIdx][5] = 1
 
-            babycell = [[
-                        cells[cellIdx][0],
-                        cells[cellIdx][1],
-                        cells[cellIdx][2],
-                        delta_m,
-                        0,
-                        1,
-                        cells[cellIdx][6],
-                        cells[cellIdx][7],
-                        cells[cellIdx][8],
-                        cells[cellIdx][9],
-                        cells[cellIdx][10],
-                        cells[cellIdx][11],
-                        cells[cellIdx][12],
-                        cells[cellIdx][13],
-                        cells[cellIdx][14],
-                        cells[cellIdx][15],
-                        cells[cellIdx][16],
-                        0,
-                        delta_m
-                        ]]
+            babycell = np.array([[
+                                    cells[cellIdx][0],
+                                    cells[cellIdx][1],
+                                    cells[cellIdx][2],
+                                    delta_m,
+                                    0,
+                                    1,
+                                    cells[cellIdx][6],
+                                    cells[cellIdx][7],
+                                    cells[cellIdx][8],
+                                    cells[cellIdx][9],
+                                    cells[cellIdx][10],
+                                    cells[cellIdx][11],
+                                    cells[cellIdx][12],
+                                    cells[cellIdx][13],
+                                    cells[cellIdx][14],
+                                    cells[cellIdx][15],
+                                    cells[cellIdx][16],
+                                    0,
+                                    delta_m
+                                    ]])
 
             cells[cellIdx][6] += 0.1 * cells[cellIdx][3]
             
             #what do we want? An n Genen wird eine Mutation verursacht
-            genes = [6, 7, 8, 9, 11, 12, 13, 14, 15, 16]
+            genes = np.array([6, 7, 8, 9, 11, 12, 13, 14, 15, 16])
             mutation_frequency = 2
             mutation = np.random.choice(genes, size = mutation_frequency)
             print(mutation)
@@ -139,7 +139,7 @@ def reproduction(grid, cells, cellIdx):
         elif cells[cellIdx][17] <= cells[cellIdx][8]:
             # The Time has not come
             cells[cellIdx][17] += 1
-            
+
     return cells
 
 #@jit
