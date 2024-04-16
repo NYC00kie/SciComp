@@ -106,7 +106,7 @@ def main_cpu():
                 if i % loggingit == 0:
                     plt.imshow(grid[entry])
                     plt.colorbar()
-                    plt.savefig(f"../out/grid_post_{entry}_{i//loggingit}.jpg",dpi=800)
+                    plt.savefig(f"./out/grid_post_{entry}_{i//loggingit}.jpg",dpi=800)
                     plt.clf()
 
             # do the cell, yes I said it.
