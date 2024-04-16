@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=8            # with that many cpu cores
 #SBATCH --mem=64G                    # will require that amount of RAM at maximum (if the process takes more it gets killed)
 #SBATCH --time=0-16:00               # maximum runtime of the job as "d-hh:mm"
-#SBATCH --chdir=/work/{kiyan}/SciComp   # working directory of the job
+#SBATCH --chdir=/work/kiyan/SciComp   # working directory of the job
 #SBATCH --mail-type=ALL              # always get mail notifications
 #SBATCH --output=slurm-%j.out        # standard out of the job into this file (also stderr)
 
