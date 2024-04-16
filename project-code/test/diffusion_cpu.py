@@ -44,7 +44,7 @@ def main_cpu():
     yeast_cells[0][8] = 2
     yeast_cells[0][9] = 2
     yeast_cells[0][10] = 0
-    yeast_cells[0][11] = 0.5
+    yeast_cells[0][11] = 0.25
     yeast_cells[0][12] = 1/30
     yeast_cells[0][13] = 1/7200
     yeast_cells[0][14] = 0.01

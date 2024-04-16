@@ -131,7 +131,7 @@ def reproduction(grid, cells, cellIdx):
             mutation = np.random.choice(genes, size = mutation_frequency)
             # print(mutation)
             for n in range(0, mutation_frequency):
-                m_1 = np.random.normal(loc = 0, scale = 0.2*cells[cellIdx][mutation[n]])
+                m_1 = np.random.normal(loc = 0, scale = 0.1*cells[cellIdx][mutation[n]])
                 cells[cellIdx][mutation[n]] += m_1
                 
             cells = np.append(cells, babycell, axis=0)
