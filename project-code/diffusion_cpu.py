@@ -53,7 +53,7 @@ def main_cpu():
     yeast_cells[0][17] = 0
     yeast_cells[0][18] = yeast_cells[0][3]
 
-
+    strongest_survivor = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
     print(len(yeast_cells[0]))
     # Glucose
