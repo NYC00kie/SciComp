@@ -83,9 +83,12 @@ def main_cpu():
     """
     tracking_params = {
     0:[],
-    1:[]
+    1:[],
+    2:[],
+    3:[]
     }
-    with Pool(6) as p:
+    try:
+        with Pool(6) as p:
         print(iterations)
         for i in range(iterations):
             if i % loggingit == 0:
@@ -112,20 +115,28 @@ def main_cpu():
             # do the cell, yes I said it.
             alive = 0
             dead = 0
+            new_cells = []
             for j in range(len(yeast_cells)):
                 if np.sum(yeast_cells[j]) == 0:
                     dead += 1
                 else:
                     alive += 1
-                    yeast_cells = do_cell(grid,yeast_cells,j)
+                    new_cells.append(do_cell(grid,yeast_cells,j))
+
+            yeast_cells = new_cells
 
             tracking_params[0].append(alive)
             tracking_params[1].append(dead)
+            tracking_params[2].append(np.sum(grid[0]))
+            tracking_params[3].append(np.sum(grid[1]))
 
-    for i in range(len(tracking_params)):
-        plt.plot(np.arange(iterations),tracking_params[i])
-        plt.savefig(f"cell_params_{i}.jpg")
-        plt.clf()
+    except Exception as e:
+        print(e)
+    finally:
+        for i in range(len(tracking_params)):
+            plt.plot(np.arange(iterations),tracking_params[i])
+            plt.savefig(f"cell_params_{i}.jpg")
+            plt.clf()
 
 if __name__ == "__main__":
  
