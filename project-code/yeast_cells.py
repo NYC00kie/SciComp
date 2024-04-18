@@ -37,8 +37,8 @@ def metabolism(cell):
 
     Eaten = min((U, Field_Glucose))
 
-    grid[0][int(cell[0]), int(cell[1])] -= Eaten
-
+    print( Eaten, z_2, Field_Glucose)
+    
     ME = I * cell[3] + Field_Ethanole * z_3 * np.power(cell[3], 2 / 3)
 
     Difference = Eaten - ME
@@ -53,6 +53,7 @@ def metabolism(cell):
             cell = [0] * cell_parameters
 
     else:
+        grid[0][int(cell[0]), int(cell[1])] -= Eaten
         # The Cell has got enough food and can add to its mass
         delta_m = Y * Difference
         cell[3] += delta_m
