@@ -37,7 +37,7 @@ def metabolism(cell):
 
     Eaten = min((U, Field_Glucose))
 
-    print( Eaten, z_2, Field_Glucose)
+    # print( Eaten, z_2, Field_Glucose)
     
     ME = I * cell[3] + Field_Ethanole * z_3 * np.power(cell[3], 2 / 3)
 

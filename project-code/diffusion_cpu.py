@@ -100,8 +100,6 @@ def main_cpu():
                     print(f"Oxy:{np.sum(yeast_cells.grid[1])}")
                     print(f"Ethanol:{np.sum(yeast_cells.grid[2])}")
                     print(f"CO_2:{np.sum(yeast_cells.grid[3])}")
-                    print(cells)
-                    print(f"Cells:{len(cells)}")
                     print(f"iterations:{i}")
 
                 # diffuse material
