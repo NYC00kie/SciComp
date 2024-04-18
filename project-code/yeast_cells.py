@@ -38,7 +38,7 @@ def metabolism(cell):
     Eaten = min((U, Field_Glucose))
 
     # print( Eaten, z_2, Field_Glucose)
-    
+
     ME = I * cell[3] + Field_Ethanole * z_3 * np.power(cell[3], 2 / 3)
 
     Difference = Eaten - ME
@@ -50,6 +50,7 @@ def metabolism(cell):
         if cell[10] >= cell[9]:
             # The Cell has surpassed it maximum time without enough food.
             # It now has died
+            print("cell died")
             cell = [0] * cell_parameters
 
     else:
