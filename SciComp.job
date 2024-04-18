@@ -30,6 +30,6 @@ export OMP_NUM_TREADS=$SLURM_CPUS_PER_TASK
 
 # execute file
 
-python3 project-code/diffusion_cpu.py
+python3 main.py
 
 bash gen_video.sh

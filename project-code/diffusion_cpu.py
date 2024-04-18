@@ -84,10 +84,15 @@ def main_cpu():
     -update of new individual characteristics (wdym?)
     -repeat
     """
-
-    tracking_params = {0: [], 1: []}
-    print(iterations)
-    with Pool(32) as p:
+    tracking_params = {
+    0:[],
+    1:[],
+    2:[],
+    3:[]
+    }
+    try:
+        print(iterations)
+        with Pool(32) as p:
         for i in range(iterations):
             if i % loggingit == 0:
                 print(f"Glucose:{np.sum(grid[0])}")
@@ -111,7 +116,6 @@ def main_cpu():
                     plt.clf()
 
             # do the cell, yes I said it.
-
             do_cell_with_grid = partial(do_cell, dim=dim)
             all_cells = p.map(do_cell_with_grid, cells)
 
@@ -137,11 +141,17 @@ def main_cpu():
             cells = cells_new
             tracking_params[0].append(alive)
             tracking_params[1].append(dead)
+            tracking_params[2].append(np.sum(grid[0]))
+            tracking_params[3].append(np.sum(grid[1]))
 
-    for i in range(len(tracking_params)):
-        plt.plot(np.arange(iterations), tracking_params[i])
-        plt.savefig(f"cell_params_{i}.jpg")
-        plt.clf()
+
+    except Exception as e:
+        print(e)
+    finally:
+        for i in range(len(tracking_params)):
+            plt.plot(np.arange(iterations),tracking_params[i])
+            plt.savefig(f"cell_params_{i}.jpg")
+            plt.clf()
 
 
 if __name__ == "__main__":
