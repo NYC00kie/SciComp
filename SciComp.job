@@ -11,23 +11,22 @@
 #SBATCH --output=slurm-%j.out        # standard out of the job into this file (also stderr)
 
 # some example output
-
 if [ ! -d "SciComp" ]; then
   echo "$DIRECTORY does not exist."
   git clone https://gitup.uni-potsdam.de/scheel/SciComp.git
 fi
 
 
-# prep the repo
-#cd SciComp
+
 git stash
 git pull
 rm ./out/*
 
-# initialize env
+module load system/CUDA
 module load lang/Anaconda3/2021.05
 module load vis/FFmpeg
 source activate SciCompEnv
+export OMP_NUM_TREADS=$SLURM_CPUS_PER_TASK
 
 # execute file
 

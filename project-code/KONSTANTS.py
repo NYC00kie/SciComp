@@ -2,13 +2,11 @@
 
 cells_n = 1
 cell_parameters = 19
-iterations = 300
+iterations = 1001
 materials = 4
-width = 20
-height = 20
+width = 100
+height = 100
 diff_per_it = 5
-
-mutation_frequency = 2
 
 # Debugging Constants
 loggingit = 50
