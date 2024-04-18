@@ -8,5 +8,7 @@ width = 20
 height = 20
 diff_per_it = 5
 
+mutation_frequency = 2
+
 # Debugging Constants
 loggingit = 50

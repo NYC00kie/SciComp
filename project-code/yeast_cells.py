@@ -127,7 +127,6 @@ def reproduction(grid, cells, cellIdx):
             
             #what do we want? An n Genen wird eine Mutation verursacht
             genes = np.array([6, 7, 8, 9, 11, 12, 13, 14, 15, 16])
-            mutation_frequency = 2
             mutation = np.random.choice(genes, size = mutation_frequency)
             # print(mutation)
             for n in range(0, mutation_frequency):
