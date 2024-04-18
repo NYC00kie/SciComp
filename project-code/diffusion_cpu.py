@@ -1,14 +1,16 @@
-from KONSTANTS import *
-import subprocess
-from numba import jit
-import numpy as np
-import matplotlib.pyplot as plt
+import json
 import math
-from multiprocessing import Pool, cpu_count
+import subprocess
+from functools import partial
+from multiprocessing import Array, Pool, cpu_count
+
+import matplotlib.pyplot as plt
+import numpy as np
+import yeast_cells
+from KONSTANTS import *
 from scipy.signal import convolve2d
 from yeast_cells import do_cell
-import json
-from numpyencoder import NumpyEncoder
+
 
 def diffuse(grid_part):
     p = 0.125
@@ -19,51 +21,58 @@ def diffuse(grid_part):
 
     return grid_part
 
-def main_cpu():
 
+def main_cpu():
     np.random.seed(0)
     # creating diffusion kernel
     p = 0.125
     kernel = np.ones((3, 3)) * p
     kernel[1, 1] = 0
 
-    dim = (materials,width,height)
-    
-    grid = np.zeros(dim,dtype=np.float64)
+    dim = (materials, width, height)
 
-    yeast_cells = [[0 for n in range(cell_parameters)] for _ in range(cells_n)]
+    grid = np.zeros(dim, dtype=np.float64)
 
-    yeast_cells[0][0] = 0
-    yeast_cells[0][1] = 0
-    yeast_cells[0][2] = 0
-    yeast_cells[0][3] = 1
-    yeast_cells[0][4] = 0
-    yeast_cells[0][5] = 1
-    yeast_cells[0][6] = 1.1
-    yeast_cells[0][7] = 1
-    yeast_cells[0][8] = 2
-    yeast_cells[0][9] = 2
-    yeast_cells[0][10] = 0
-    yeast_cells[0][11] = 0.5
-    yeast_cells[0][12] = 1/30
-    yeast_cells[0][13] = 1/7200
-    yeast_cells[0][14] = 0.01
-    yeast_cells[0][15] = 0.2
-    yeast_cells[0][16] = 1/3900
-    yeast_cells[0][17] = 0
-    yeast_cells[0][18] = yeast_cells[0][3]
+    cells = [[0.0 for n in range(cell_parameters)] for _ in range(cells_n)]
 
+    cells[0][0] = 0
+    cells[0][1] = 0
+    cells[0][2] = 0
+    cells[0][3] = 1
+    cells[0][4] = 0
+    cells[0][5] = 1
+    cells[0][6] = 1.1
+    cells[0][7] = 1
+    cells[0][8] = 2
+    cells[0][9] = 2
+    cells[0][10] = 0
+    cells[0][11] = 0.5
+    cells[0][12] = 1 / 30
+    cells[0][13] = 1 / 7200
+    cells[0][14] = 0.01
+    cells[0][15] = 0.2
+    cells[0][16] = 1 / 3900
+    cells[0][17] = 0
+    cells[0][18] = cells[0][3]
 
-
-    print(len(yeast_cells[0]))
+    print(len(cells[0]))
     # Glucose
     # Sauerstoff
     # Ethanol
     # CO_2
 
-    grid[0] = np.full((width,height),36)*10e-3
-    grid[1] = np.full((width,height),1)*10e-3
+    grid[0] = np.full((width, height), 36) * 10e-3
+    grid[1] = np.full((width, height), 1) * 10e-3
 
+    # construct a multiprocess-safe array
+    flattened_grid = grid.ravel()
+    thread_grid = Array("d", flattened_grid.size, lock=True)
+    np.frombuffer(thread_grid.get_obj(), dtype="float")[:] = flattened_grid
+
+    yeast_cells.grid = np.frombuffer(thread_grid.get_obj(), dtype=int).reshape(dim)
+
+    dead = 0
+    alive = 1
 
     """  von hier an ist die Reihenfolge der Schritte aus dem 'Paper
     INDISIM-YEAST: an individual-based simulator on a website for 
@@ -82,10 +91,7 @@ def main_cpu():
     -update of new individual characteristics (wdym?)
     -repeat
     """
-    tracking_params = {
-    0:[],
-    1:[]
-    }
+    tracking_params = {0: [], 1: []}
     print(iterations)
     with Pool(32) as p:
         for i in range(iterations):
@@ -94,59 +100,56 @@ def main_cpu():
                 print(f"Oxy:{np.sum(grid[1])}")
                 print(f"Ethanol:{np.sum(grid[2])}")
                 print(f"CO_2:{np.sum(grid[3])}")
-                print(yeast_cells)
-                print(f"Cells:{len(yeast_cells)}")
-                print(f"Cell_len:{len(yeast_cells[0])}")
+                print(cells)
+                print(f"Cells:{len(cells)}")
                 print(f"iterations:{i}")
 
             # diffuse material
 
             for j in range(diff_per_it):
-                grid = p.map(diffuse,grid)
+                yeast_cells.grid[:] = p.map(diffuse, yeast_cells.grid)
 
             for entry in range(materials):
-
                 if i % loggingit == 0:
-                    plt.imshow(grid[entry])
+                    plt.imshow(yeast_cells.grid[entry])
                     plt.colorbar()
-                    plt.savefig(f"./out/grid_post_{entry}_{i//loggingit}.jpg",dpi=800)
+                    plt.savefig(f"./out/grid_post_{entry}_{i//loggingit}.jpg", dpi=800)
                     plt.clf()
 
-
             # do the cell, yes I said it.
 
-            args = [(grid,yeast_cells,j) for j in range(len(yeast_cells))]
+            do_cell_with_grid = partial(do_cell, dim=dim)
+            all_cells = p.map(do_cell_with_grid, cells)
+
+            # print(possibly_new_cells, cells)
+            cells = []
+            for part_of_cells in all_cells:
+                cells.extend(part_of_cells)
+
+            # args = [(grid, cells, j) for j in range(len(cells))]
             # do the cell, yes I said it.
-            res_ = p.starmap(do_cell,args)
+            # res_ = p.starmap(do_cell, args)
 
-            new_yeast = []
+            # print(type(res_))
+            # print(type(res_[0]))
+            # print(res_[0][1])
+            # print(len(res_))
 
-            grid = np.add(grid,res_[0][1])/2
+            cells_new = [cell for cell in cells if np.sum(cell) != 0]
 
-            for j in range(len(res_[0][0])):
-                new_yeast.append(res_[0][0][j])
+            alive = len(cells_new)
+            dead += len(cells) - len(cells_new)
 
-            yeast_cells = new_yeast
-
-            alive = 0
-            dead = 0
-            for j in range(len(yeast_cells)):
-                if np.sum(yeast_cells[j]) == 0:
-                    dead += 1
-                else:
-                    alive += 1
+            cells = cells_new
 
             tracking_params[0].append(alive)
             tracking_params[1].append(dead)
 
-
-
     for i in range(len(tracking_params)):
-        plt.plot(np.arange(iterations),tracking_params[i])
+        plt.plot(np.arange(iterations), tracking_params[i])
         plt.savefig(f"cell_params_{i}.jpg")
         plt.clf()
 
 
 if __name__ == "__main__":
- 
     main_cpu()
