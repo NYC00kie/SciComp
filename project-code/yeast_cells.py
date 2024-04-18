@@ -148,4 +148,6 @@ def do_cell(cell, dim):
     spread_cell(cell)
     metabolism(cell)
 
+    print(np.sum(cell))
+
     return [cell] if babycell is None else [cell, babycell]
