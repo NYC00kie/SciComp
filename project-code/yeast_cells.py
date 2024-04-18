@@ -147,7 +147,7 @@ def do_cell(cell, dim):
     babycell = reproduction(cell)
     spread_cell(cell)
     metabolism(cell)
-
+    # zelle stirbt, aber kommt lebendig wieder.
     print(np.sum(cell))
 
     return [cell] if babycell is None else [cell, babycell]
