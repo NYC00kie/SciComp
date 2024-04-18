@@ -31,6 +31,6 @@ source activate SciCompEnv
 
 # execute file
 
-python3 project-code/diffusion_cpu.py
+python3 main.py
 
 bash gen_video.sh
