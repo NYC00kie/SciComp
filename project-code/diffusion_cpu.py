@@ -56,7 +56,7 @@ def main_cpu():
     print(len(cells[0]))
 
     grid[0] = np.full((width, height), 36) * 10e-3
-    grid[1] = np.full((width, height), 100) * 10e-3
+    grid[1] = np.full((width, height), 10) * 10e-3
 
     # construct a multiprocess-safe array
     flattened_grid = grid.ravel()
@@ -89,7 +89,9 @@ def main_cpu():
     0:[],
     1:[],
     2:[],
-    3:[]
+    3:[],
+    4:[],
+    5:[]
     }
     try:
         print(iterations)
@@ -134,6 +136,8 @@ def main_cpu():
                 tracking_params[1].append(dead)
                 tracking_params[2].append(np.sum(yeast_cells.grid[0]))
                 tracking_params[3].append(np.sum(yeast_cells.grid[1]))
+                tracking_params[4].append(np.sum(yeast_cells.grid[2]))
+                tracking_params[5].append(np.sum(yeast_cells.grid[3]))
 
 
     except Exception as e:
