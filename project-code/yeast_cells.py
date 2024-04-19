@@ -51,7 +51,25 @@ def metabolism(cell):
             # The Cell has surpassed it maximum time without enough food.
             # It now has died
             print("cell died")
-            cell = [0] * cell_parameters
+            cell[0] = 0
+            cell[1] = 0
+            cell[2] = 0
+            cell[3] = 0
+            cell[4] = 0
+            cell[5] = 0
+            cell[6] = 0
+            cell[7] = 0
+            cell[8] = 0
+            cell[9] = 0
+            cell[10] = 0
+            cell[11] = 0
+            cell[12] = 0
+            cell[13] = 0
+            cell[14] = 0
+            cell[15] = 0
+            cell[16] = 0
+            cell[17] = 0
+            cell[18] = 0
 
     else:
         grid[0][int(cell[0]), int(cell[1])] -= Eaten
