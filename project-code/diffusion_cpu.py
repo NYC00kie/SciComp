@@ -55,8 +55,8 @@ def main_cpu():
 
     print(len(cells[0]))
 
-    grid[0] = np.full((width, height), 36) * 10e-3
-    grid[1] = np.full((width, height), 10) * 10e-3
+    grid[0] = np.full((width, height), 36)
+    grid[1] = np.full((width, height), 0.6)
 
     # construct a multiprocess-safe array
     flattened_grid = grid.ravel()
