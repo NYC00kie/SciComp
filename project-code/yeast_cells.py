@@ -50,7 +50,6 @@ def metabolism(cell):
         if cell[10] >= cell[9]:
             # The Cell has surpassed it maximum time without enough food.
             # It now has died
-            print("cell died")
             cell[0] = 0
             cell[1] = 0
             cell[2] = 0
@@ -166,6 +165,5 @@ def do_cell(cell, dim):
     spread_cell(cell)
     metabolism(cell)
     # zelle stirbt, aber kommt lebendig wieder.
-    print(np.sum(cell))
 
     return [cell] if babycell is None else [cell, babycell]
