@@ -17,6 +17,13 @@ def diffuse(grid_part):
 
     return grid_part
 
+def save_plot(grid,i,entry):
+    plt.imshow(grid)
+    plt.colorbar()
+    plt.savefig(f"./out/grid_post_{entry}_{i//loggingit}.jpg", dpi=800)
+    plt.clf()
+
+
 
 def main_cpu():
     np.random.seed(0)
@@ -95,7 +102,7 @@ def main_cpu():
     }
     try:
         print(iterations)
-        with Pool(32) as p:
+        with Pool(64) as p:
             for i in range(iterations):
                 if i % loggingit == 0:
                     print(f"Glucose:{np.sum(yeast_cells.grid[0])}")
@@ -111,10 +118,7 @@ def main_cpu():
 
                 if i % loggingit == 0:
                     for entry in range(materials):
-                        plt.imshow(yeast_cells.grid[entry])
-                        plt.colorbar()
-                        plt.savefig(f"./out/grid_post_{entry}_{i//loggingit}.jpg", dpi=800)
-                        plt.clf()
+                        p.apply_async(save_plot,(yeast_cells.grid[entry],i,entry,))
 
                 # do the cell, yes I said it.
                 do_cell_with_grid = partial(do_cell, dim=dim)
