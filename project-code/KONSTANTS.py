@@ -2,7 +2,7 @@
 
 cells_n = 1
 cell_parameters = 19
-iterations = 10000
+iterations = 20000
 materials = 4
 width = 1000
 height = 1000
