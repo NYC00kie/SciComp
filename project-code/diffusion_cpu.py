@@ -96,12 +96,12 @@ def main_cpu():
     lastsurvivors = []
 
     tracking_params = {
-    0:[],
-    1:[],
-    2:[],
-    3:[],
-    4:[],
-    5:[]
+    0:[],#alive
+    1:[],#dead
+    2:[],#glucose
+    3:[],#oxygen
+    4:[],#Ethanol
+    5:[]#CO_2
     }
     try:
         print(iterations)
@@ -150,12 +150,11 @@ def main_cpu():
                     lastsurvivors = cells
 
 
+            np.savetxt("Survivor.csv", np.array(lastsurvivors), delimiter=",")
+
     except Exception as e:
         print(e)
     finally:
-        import json
-        with open('data.json', 'w', encoding='utf-8') as f:
-            json.dump(lastsurvivors, f, ensure_ascii=False, indent=4)
         for i in range(len(tracking_params)):
             plt.plot(np.arange(len(tracking_params[i])),tracking_params[i])
             plt.savefig(f"cell_params_{i}.jpg")
