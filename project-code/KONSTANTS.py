@@ -9,4 +9,4 @@ height = 1000
 diff_per_it = 5
 
 # Debugging Constants
-loggingit = 50
+loggingit = 50 

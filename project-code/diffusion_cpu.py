@@ -86,12 +86,15 @@ def main_cpu():
     s-Enough nutrient particles for new biomass?
     s-production and excretion of ethanole
     s-buding phase?
-    -cell division, new yeast cell (mutation!)
-    -unbudded phase
-    -requirments to be viable?
-    -update of new individual characteristics (wdym?)
-    -repeat
+    s-cell division, new yeast cell (mutation!)
+    s-unbudded phase
+    s-requirments to be viable?
+    s-update of new individual characteristics (wdym?)
+    s-repeat
     """
+
+    lastsurvivors = []
+
     tracking_params = {
     0:[],
     1:[],
@@ -143,10 +146,16 @@ def main_cpu():
                 tracking_params[4].append(np.sum(yeast_cells.grid[2]))
                 tracking_params[5].append(np.sum(yeast_cells.grid[3]))
 
+                if alive > 0:
+                    lastsurvivors = cells
+
 
     except Exception as e:
         print(e)
     finally:
+        import json
+        with open('data.json', 'w', encoding='utf-8') as f:
+            json.dump(lastsurvivors, f, ensure_ascii=False, indent=4)
         for i in range(len(tracking_params)):
             plt.plot(np.arange(len(tracking_params[i])),tracking_params[i])
             plt.savefig(f"cell_params_{i}.jpg")
