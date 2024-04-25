@@ -1,8 +1,5 @@
 # SciComp
 
-
-## [SimSim Doodles](./doodles/simsimsim_toxicity.md)
-
 ## [Project Code](./project-code/Info.md)
 
 ## Paper
