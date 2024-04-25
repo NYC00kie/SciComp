@@ -1,5 +1,6 @@
 from functools import partial
 from multiprocessing import Array, Pool, cpu_count
+from datetime import datetime
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -95,14 +96,14 @@ def main_cpu():
 
     lastsurvivors = []
 
-    tracking_params = {
-    0:[],#alive
-    1:[],#dead
-    2:[],#glucose
-    3:[],#oxygen
-    4:[],#Ethanol
-    5:[]#CO_2
-    }
+    tracking_params = [
+        [],#alive
+        [],#dead
+        [],#glucose
+        [],#oxygen
+        [],#Ethanol
+        []#CO_2
+        ]
     try:
         print(iterations)
         with Pool(64) as p:
@@ -155,6 +156,8 @@ def main_cpu():
     except Exception as e:
         print(e)
     finally:
+
+        np.savetxt(f"params-{datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]}.csv", tracking_params, delimiter=",")
         for i in range(len(tracking_params)):
             plt.plot(np.arange(len(tracking_params[i])),tracking_params[i])
             plt.savefig(f"cell_params_{i}.jpg")
