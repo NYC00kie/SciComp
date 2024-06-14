@@ -157,7 +157,9 @@ def main_cpu():
 
 
             np.savetxt("Survivor.csv", np.array(lastsurvivors), delimiter=",")
-
+            with open("Survivor.csv", "ab") as f:
+                    f.write(b"\n")
+                    numpy.savetxt(f, np.array(lastsurvivors), delimiter=",")
     except Exception as e:
         print(e)
     finally:
