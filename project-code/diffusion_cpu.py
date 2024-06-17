@@ -41,9 +41,9 @@ def main_cpu():
     cells = [[0.0 for n in range(cell_parameters)] for _ in range(cells_n)]
 
     f = open("Survivor.csv", "r")
-    lines = [[float(number) for number in line.split(",")] for line in f.readlines()]
+    lastcell = [float(number) for number in f.readlines()[-1].split(",")]
 
-    cells[0] = lines[-1]
+    cells[0] = lastcell
 
     print(cells)
 
