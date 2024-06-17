@@ -155,8 +155,6 @@ def main_cpu():
                 if alive > 0:
                     lastsurvivors = cells
 
-
-            np.savetxt("Survivor.csv", np.array(lastsurvivors), delimiter=",")
             with open("Survivor.csv", "ab") as f:
                     f.write(b"\n")
                     numpy.savetxt(f, np.array(lastsurvivors), delimiter=",")
