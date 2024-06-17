@@ -45,6 +45,7 @@ def main_cpu():
 
     cells[0] = lines[-1]
 
+    print(cells)
 
     # cells[0][0] = 0
     # cells[0][1] = 0
