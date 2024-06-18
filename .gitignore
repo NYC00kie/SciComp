@@ -167,5 +167,4 @@ cython_debug/
 *lib64*
 
 # Pictures
-*.png
 out/
