@@ -12,5 +12,5 @@ for paramindex in range(6):
 		plt.plot(parami,label=f"itt. {datenlisteindex}")
 
 	plt.legend()
-	plt.savefig(f"10-itterations-daten/cell_params_{paramindex}")
+	plt.savefig(f"10-itterations-daten/cell_params_{paramindex}",dpi=800)
 	plt.clf()
