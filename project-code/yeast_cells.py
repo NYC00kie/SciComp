@@ -90,7 +90,7 @@ def metabolism(cell):
             not_compensated = Eaten - Field_Oxygen * 1 / 2
             # for every glucose, 2 Ethanol will come from it
             # should be correct as we work with molecular amounts
-            grid[2][int(cell[0]), int(cell[1])] = 2 * not_compensated
+            grid[2][int(cell[0]), int(cell[1])] += 2 * not_compensated
 
 
 # @jit
