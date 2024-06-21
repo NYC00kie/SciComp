@@ -157,6 +157,7 @@ def main_cpu():
                     lastsurvivors = cells
 
             with open("Survivor.csv", "ab") as f:
+                    f.write(b"\n")
                     np.savetxt(f, np.array(lastsurvivors), delimiter=",")
     except Exception as e:
         print(e)
