@@ -7,7 +7,6 @@ from numba import jit
 
 grid = None
 
-
 # @jit
 def metabolism(cell):
     #
