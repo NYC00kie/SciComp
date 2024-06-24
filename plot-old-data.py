@@ -5,13 +5,13 @@ import matplotlib.cm as cm
 import numpy as np
 import scipy
 
-length = 20
+length = 10
 
 norm = color.Normalize(vmin=0, vmax=length+2)
 cmap = cm.hsv
 m = cm.ScalarMappable(norm=norm, cmap=cmap)
 
-datenliste = [open(f"10-itterations-daten/params-{i}.csv", "r").readlines() for i in range(1,21)]
+datenliste = [open(f"new-20-calcs/params-{i}.csv", "r").readlines() for i in range(1,length+1)]
 
 daten = datenliste[0]
 
@@ -23,5 +23,5 @@ for paramindex in range(6):
 		line.set_color(m.to_rgba(datenlisteindex))
 
 	plt.legend()
-	plt.savefig(f"10-itterations-daten/cell_params_{paramindex}",dpi=800)
+	plt.savefig(f"new-20-calcs/cell_params_{paramindex}",dpi=800)
 	plt.clf()
