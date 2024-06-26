@@ -5,7 +5,7 @@ import matplotlib.cm as cm
 import numpy as np
 import scipy
 
-length = 10
+length = 17
 
 norm = color.Normalize(vmin=0, vmax=length+2)
 cmap = cm.hsv
@@ -15,6 +15,9 @@ datenliste = [open(f"new-20-calcs/params-{i}.csv", "r").readlines() for i in ran
 
 daten = datenliste[0]
 
+titels = ["Population","Tode","Glucose Amount","Oxygen Amount","Ethanol Amount","$CO^2$ Amount"]
+ylabel = ["Anzahl N","Anzahl N","Glucose Pakete N","Sauerstoff Pakete N","Alkohol Pakete N","$CO^2$ Pakete N"]
+
 for paramindex in range(6):
 	for datenlisteindex in range(length):
 
@@ -23,5 +26,8 @@ for paramindex in range(6):
 		line.set_color(m.to_rgba(datenlisteindex))
 
 	plt.legend()
+	plt.title(titels[paramindex])
+	plt.xlabel("itterationen")
+	plt.ylabel("")
 	plt.savefig(f"new-20-calcs/cell_params_{paramindex}",dpi=800)
 	plt.clf()

@@ -70,3 +70,4 @@ Cell indices:
 16: Glucoseinhibition
 17: time in budding phase
 18: starting mass of the cell
+19: generation number

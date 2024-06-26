@@ -68,6 +68,7 @@ def metabolism(cell):
             cell[16] = 0
             cell[17] = 0
             cell[18] = 0
+            cell[19] = 0
 
     else:
         grid[0][int(cell[0]), int(cell[1])] -= Eaten
@@ -140,6 +141,7 @@ def reproduction(cell):
                 cell[16],
                 0,
                 delta_m,
+                cell[19],
             ]
 
             cell[6] += 0.1 * cell[3]
