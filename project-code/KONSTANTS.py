@@ -2,10 +2,10 @@
 
 cells_n = 1
 cell_parameters = 19
-iterations = 40
+iterations = 40000
 materials = 4
-width = 1
-height = 1
+width = 1000
+height = 1000
 diff_per_it = 5
 
 # Debugging Constants
