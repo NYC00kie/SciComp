@@ -28,6 +28,6 @@ for paramindex in range(6):
 	plt.legend()
 	plt.title(titels[paramindex])
 	plt.xlabel("itterationen")
-	plt.ylabel("")
+	plt.ylabel(ylabel[paramindex])
 	plt.savefig(f"new-20-calcs/cell_params_{paramindex}",dpi=800)
 	plt.clf()

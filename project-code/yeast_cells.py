@@ -71,27 +71,40 @@ def metabolism(cell):
             cell[19] = 0
 
     else:
-        grid[0][int(cell[0]), int(cell[1])] -= Eaten
-        # The Cell has got enough food and can add to its mass
-        delta_m = Y * Difference
-        cell[3] += delta_m
-        cell[10] = 0
+            # The Cell has got enough food and can add to its mass
+            # this can remain as is, because the cell consumes enough to keep up its metabolism
+            delta_m = Y * Difference
+            # she is giving
+            cell[10] = 0
 
-        # return ethanol if there was not enough oxygen to turn it all into water and CO_2
-        if Field_Oxygen - 2 * Eaten >= 0:
-            # Perfect, the Oxygen cancelled out the Glucose, no Ethanol was produced
-            # remove Oxygen
-            grid[1][int(cell[0]), int(cell[1])] += -2 * Eaten
-            # add CO_2
-            grid[3][int(cell[0]), int(cell[1])] += 2 * Eaten
-        else:
-            # Oh No, the Oxygen wasnt enough to compensate the Glucose.
-            # How much Glucose was compensated ?
-            not_compensated = Eaten - Field_Oxygen * 1 / 2
-            # for every glucose, 2 Ethanol will come from it
-            # should be correct as we work with molecular amounts
-            grid[2][int(cell[0]), int(cell[1])] += 2 * not_compensated
-
+            # return ethanol if there was not enough oxygen to turn it all into water and CO_2
+            if Field_Oxygen - 6 * Eaten >= 0:
+                # Perfect, the Oxygen cancelled out the Glucose, no Ethanol was produced
+                # remove Oxygen
+                grid[0][int(cell[0]), int(cell[1])] -= Eaten
+                # she ate
+                grid[1][int(cell[0]), int(cell[1])] += -6 * Eaten
+                # add CO_2
+                grid[3][int(cell[0]), int(cell[1])] += 6 * Eaten
+                cell[3] += delta_m
+                cell[13] = np.random.normal(loc=0.999, scale=0.0005)*cell[13]
+                cell[16] = np.random.normal(loc=0.999, scale=0.0005)*cell[16]
+                
+            else:
+                # Oh No, the Oxygen wasnt enough to compensate the Glucose.
+                # How much Glucose was compensated ?
+                not_compensated = Eaten - Field_Oxygen * 1 / 6
+                bigNom = 18 * not_compensated
+                # as it is missing 18 times the ATP needed to survive, it adapts to consume more.
+                grid[0][int(cell[0]), int(cell[1])] -= min(bigNom + (Field_Oxygen * 1 / 6), Field_Glucose)
+                # for every glucose, 2 Ethanol will come from it
+                # should be correct as we work with molecular amounts
+                grid[2][int(cell[0]), int(cell[1])] += 2 * not_compensated
+                # add CO_2
+                grid[3][int(cell[0]), int(cell[1])] += 2 * not_compensated
+                # let's just say, it is their thing. Diese Hefekultur ist speziell und wächst ohne 
+                # Sauerstoff nur 75% so viel wie mit Sauerstoff:
+                cell[3] += delta_m*0.75
 
 # @jit
 def reproduction(cell):
