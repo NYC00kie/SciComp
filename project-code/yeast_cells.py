@@ -154,7 +154,7 @@ def reproduction(cell):
                 cell[16],
                 0,
                 delta_m,
-                cell[19],
+                cell[19]+1,
             ]
 
             cell[6] += 0.1 * cell[3]
