@@ -79,6 +79,7 @@ def metabolism(cell):
 
             # return ethanol if there was not enough oxygen to turn it all into water and CO_2
             if Field_Oxygen - 6 * Eaten >= 0:
+                print("No Ethanol")
                 # Perfect, the Oxygen cancelled out the Glucose, no Ethanol was produced
                 # remove Oxygen
                 grid[0][int(cell[0]), int(cell[1])] -= Eaten

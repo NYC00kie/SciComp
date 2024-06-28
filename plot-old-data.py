@@ -5,7 +5,7 @@ import matplotlib.cm as cm
 import numpy as np
 import scipy
 
-length = 17
+length = 31
 
 norm = color.Normalize(vmin=0, vmax=length+2)
 cmap = cm.hsv
