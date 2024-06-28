@@ -96,6 +96,9 @@ def metabolism(cell):
                 # How much Glucose was compensated ?
                 not_compensated = Eaten - Field_Oxygen * 1 / 6
                 bigNom = 18 * not_compensated
+                compensated = Eaten - not_compensated
+                #remove compensated oxygen
+                grid[1][int(cell[0]), int(cell[1])] -= min(6*compensated,Field_Oxygen)
                 # as it is missing 18 times the ATP needed to survive, it adapts to consume more.
                 grid[0][int(cell[0]), int(cell[1])] -= min(bigNom + (Field_Oxygen * 1 / 6), Field_Glucose)
                 # for every glucose, 2 Ethanol will come from it
