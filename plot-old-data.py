@@ -5,13 +5,13 @@ import matplotlib.cm as cm
 import numpy as np
 import scipy
 
-length = 31
+length = 2
 
 norm = color.Normalize(vmin=0, vmax=length+2)
 cmap = cm.hsv
 m = cm.ScalarMappable(norm=norm, cmap=cmap)
 
-datenliste = [open(f"new-20-calcs/params-{i}.csv", "r").readlines() for i in range(1,length+1)]
+datenliste = [open(f"turans-new-calcs/params-{i}.csv", "r").readlines() for i in range(1,length+1)]
 
 daten = datenliste[0]
 
@@ -29,5 +29,5 @@ for paramindex in range(6):
 	plt.title(titels[paramindex])
 	plt.xlabel("itterationen")
 	plt.ylabel(ylabel[paramindex])
-	plt.savefig(f"new-20-calcs/cell_params_{paramindex}",dpi=800)
+	plt.savefig(f"turans-new-calcs/cell_params_{paramindex}",dpi=800)
 	plt.clf()
